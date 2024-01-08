@@ -11,7 +11,7 @@ servers:
   - url: localhost/api/v1
 tags:
   - name: database
-    description: Manage of project database.
+    description: Manage of project database
 paths:
   /database/users/list:
     get:
