@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: IOT Project - OpenAPI 3.0
+  description: |-
+    This is a first draft of API for IOT Project.
+     
+    Some useful links:
+    - [Github project](https://github.com/samuelus/projektIOT)
+  version: 0.0.1
+servers:
+  - url: localhost/api/v1
+tags:
+  - name: database
+    description: Manage of project database
+paths:
+  /database/users/list:
+    get:
+      tags:
+        - database
+      summary: List users.
+      description: Get all users registered in database.
+      operationId: listUsers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+        '405':
+          description: Validation exception;
+  /database/users/{ns}:
+    post:
+      tags:
+        - database
+      summary: Temp1.
+      description: Temp2.
+      operationId: Temp3
+      parameters:
+        - name: ns
+          in: path
+          description: Temp4
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                Temp5:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+        '405':
+          description: Validation exception
+
+
+components:
+  schemas:
+    GenericApiResponse:
+      type: object
+      properties:
+        code:
+          description: error code returned from server or database function
+          type: integer
+          format: int32
+        message:
+          description: json output message returned by server or database
+          type: string
+          format: json
+
