@@ -54,8 +54,7 @@ def create_tables():
     #Administratorzy
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS Administratorzy (
-            id_administratora INTEGER PRIMARY KEY,
-            login TEXT NOT NULL,
+            login TEXT PRIMARY KEY,
             hash_hasla TEXT NOT NULL
         )
     ''')
@@ -100,10 +99,10 @@ def insert_dummy_values():
 
     #Administratorzy
     cursor.execute('''
-        INSERT INTO Administratorzy (id_administratora, login, hash_hasla) VALUES 
-        (1, 'admin1', 'haslo1'),
-        (2, 'admin2', 'haslo2'),
-        (3, 'admin3', 'haslo3')
+        INSERT INTO Administratorzy (login, hash_hasla) VALUES 
+        ('admin1', 'haslo1'),
+        ('admin2', 'haslo2'),
+        ('admin3', 'haslo3')
     ''')
 
     conn.commit()
