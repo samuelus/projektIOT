@@ -1,7 +1,8 @@
 import sqlite3
+from database.db_constants import DB_NAME
 
 def create_tables():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     cursor.execute("DROP TABLE IF EXISTS Pracownicy")
@@ -63,7 +64,7 @@ def create_tables():
     conn.close()
 
 def insert_dummy_values():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     #Pracownicy
@@ -109,7 +110,7 @@ def insert_dummy_values():
     conn.close()
 
 def print_tables():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
     #Pracownicy
@@ -139,8 +140,7 @@ def print_tables():
 
     conn.close()
 
-
-if (__name__ == '__main__'):
+def reset_db(insert_dummy: bool):
     create_tables()
-    insert_dummy_values()
-    print_tables()
+    if (insert_dummy):
+        insert_dummy_values()
