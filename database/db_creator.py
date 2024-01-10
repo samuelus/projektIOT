@@ -63,6 +63,16 @@ def create_tables():
     conn.commit()
     conn.close()
 
+def create_root_admin():
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO Administratorzy (login, hash_hasla) VALUES 
+        ('root', 'root')
+    ''')
+    conn.commit()
+    conn.close()
+
 def insert_dummy_values():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -102,8 +112,7 @@ def insert_dummy_values():
     cursor.execute('''
         INSERT INTO Administratorzy (login, hash_hasla) VALUES 
         ('admin1', 'haslo1'),
-        ('admin2', 'haslo2'),
-        ('admin3', 'haslo3')
+        ('admin2', 'haslo2')
     ''')
 
     conn.commit()
@@ -142,5 +151,6 @@ def print_tables():
 
 def reset_db(insert_dummy: bool):
     create_tables()
+    create_root_admin()
     if (insert_dummy):
         insert_dummy_values()
