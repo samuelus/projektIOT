@@ -1,5 +1,6 @@
 import sqlite3
 from database.db_constants import DB_NAME
+from database.db_constants import ROOT_LOGIN, DEFAULT_ROOT_HASHED_PASSWORD, DUMMY_PRACOWNICY, DUMMY_ODBICIA, DUMMY_ADMINISTRATORZY, DUMMY_STREFY, DUMMY_UPRAWNIENIA
 
 def create_tables():
     conn = sqlite3.connect(DB_NAME)
@@ -60,16 +61,11 @@ def create_tables():
         )
     ''')
 
-    conn.commit()
-    conn.close()
-
-def create_root_admin():
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
+    #Create 'root' admin
     cursor.execute('''
-        INSERT INTO Administratorzy (login, hash_hasla) VALUES 
-        ('root', 'root')
-    ''')
+        INSERT INTO Administratorzy (login, hash_hasla) VALUES (?, ?)
+    ''', (ROOT_LOGIN, DEFAULT_ROOT_HASHED_PASSWORD))
+
     conn.commit()
     conn.close()
 
@@ -78,42 +74,29 @@ def insert_dummy_values():
     cursor = conn.cursor()
 
     #Pracownicy
-    cursor.execute('''
-        INSERT INTO Pracownicy (id_karty, imie, nazwisko) VALUES 
-        ('aff123f5agg2', 'Marcin', 'Kowalski'),
-        ('h231yu8x21f3', 'Anna', 'Nowak'),
-        ('ddzp81l38vj1', 'Piotr', 'Wiśniewski')
-    ''')
+    cursor.executemany('''
+        INSERT INTO Pracownicy (id_karty, imie, nazwisko) VALUES (?, ?, ?)
+    ''', DUMMY_PRACOWNICY)
 
     #Odbicia
-    cursor.execute('''
-        INSERT INTO Odbicia (id_odbicia, id_karty, id_strefy, czas_wejscia, czas_wyjscia) VALUES 
-        (1, 'aff123f5agg2', '1', '2023-01-01 08:00:00', '2023-01-01 16:00:00'),
-        (2, 'aff123f5agg2', '1', '2023-01-02 09:00:00', '2023-01-02 17:00:00'),
-        (3, 'ddzp81l38vj1', '1', '2023-01-03 07:30:00', '2023-01-03 15:30:00')
-    ''')
+    cursor.executemany('''
+        INSERT INTO Odbicia (id_karty, id_strefy, czas_wejscia, czas_wyjscia) VALUES (?, ?, ?, ?)
+    ''', DUMMY_ODBICIA)
 
     #UprawnieniaDostepu
-    cursor.execute('''
-        INSERT INTO UprawnieniaDostepu (id_karty, id_strefy) VALUES 
-        ('aff123f5agg2', 1),
-        ('h231yu8x21f3', 1),
-        ('ddzp81l38vj1', 1)
-    ''')
+    cursor.executemany('''
+        INSERT INTO UprawnieniaDostepu (id_karty, id_strefy) VALUES (?, ?)
+    ''', DUMMY_UPRAWNIENIA)
 
     #Strefy
-    cursor.execute('''
-        INSERT INTO Strefy (id_strefy, nazwa_strefy) VALUES 
-        (1, 'Strefa A'),
-        (2, 'Strefa B')
-    ''')
+    cursor.executemany('''
+        INSERT INTO Strefy (nazwa_strefy) VALUES (?)
+    ''', DUMMY_STREFY)
 
     #Administratorzy
-    cursor.execute('''
-        INSERT INTO Administratorzy (login, hash_hasla) VALUES 
-        ('admin1', 'haslo1'),
-        ('admin2', 'haslo2')
-    ''')
+    cursor.executemany('''
+        INSERT INTO Administratorzy (login, hash_hasla) VALUES (?, ?)
+    ''', DUMMY_ADMINISTRATORZY)
 
     conn.commit()
     conn.close()
@@ -151,6 +134,5 @@ def print_tables():
 
 def reset_db(insert_dummy: bool):
     create_tables()
-    create_root_admin()
     if (insert_dummy):
         insert_dummy_values()
