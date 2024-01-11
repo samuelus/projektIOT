@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sqlite3
 from datetime import datetime, timedelta
 from database.db_classes import Odbicie, Pracownik, Uprawnienia, Strefa, Admin
