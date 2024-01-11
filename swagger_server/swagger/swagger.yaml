@@ -1,0 +1,653 @@
+openapi: 3.0.0
+info:
+  title: IOT Project - OpenAPI 3.0
+  description: "This is a first draft of API for IOT Project.\n \nSome useful links:\n\
+    - [Github project](https://github.com/samuelus/projektIOT)"
+  version: 0.0.1
+servers:
+- url: http://127.0.0.1/api
+tags:
+- name: admin
+  description: Manage of admin account
+- name: strefa
+  description: Operations related to zone management
+- name: pracownik
+  description: Operations related to employes
+- name: odbicia
+  description: Operations related to rfid card bouncing
+paths:
+  /admin/login:
+    post:
+      tags:
+      - admin
+      summary: Log in to the system.
+      description: This endpoint authenticates users and provides a JWT token for
+        accessing secure endpoints.
+      operationId: login_admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin_login_body'
+        required: true
+      responses:
+        "200":
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "401":
+          description: Authentication failed
+      x-openapi-router-controller: swagger_server.controllers.admin_controller
+  /strefa:
+    post:
+      tags:
+      - strefa
+      summary: Create a new zone.
+      description: This endpoint allows for the creation of a new zone by specifying
+        its name.
+      operationId: create_zone
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/strefa_body'
+        required: true
+      responses:
+        "201":
+          description: Successfully created new zone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "409":
+          description: Zone with provided name already exist
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.strefa_controller
+  /strefy:
+    get:
+      tags:
+      - strefa
+      summary: Get a list of all zones.
+      description: This endpoint returns a list of all existing zones with their ID
+        and name.
+      operationId: get_zones
+      responses:
+        "200":
+          description: A list of zones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_1'
+                x-content-type: application/json
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.strefa_controller
+  /strefa/{id}:
+    get:
+      tags:
+      - strefa
+      summary: Get details of a specific zone.
+      description: "This endpoint returns details of a specific zone including its\
+        \ ID, name, and a list of assigned employees."
+      operationId: get_zone_details
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the zone.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Details of the specified zone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "404":
+          description: Zone not found
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.strefa_controller
+    put:
+      tags:
+      - strefa
+      summary: Edit a zone.
+      description: This endpoint allows for the editing of a zone by specifying its
+        ID and providing a new name.
+      operationId: edit_zone
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the zone to be edited.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/strefa_id_body'
+        required: true
+      responses:
+        "200":
+          description: Successfully edited the zone
+        "400":
+          description: Invalid input or zone name already exists
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "404":
+          description: Zone not found
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.strefa_controller
+    delete:
+      tags:
+      - strefa
+      summary: Delete a zone.
+      description: This endpoint allows for the deletion of a zone by specifying its
+        ID.
+      operationId: delete_zone
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the zone to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Successfully deleted the zone
+        "400":
+          description: Invalid ID supplied
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "404":
+          description: Zone not found
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.strefa_controller
+  /pracownik:
+    post:
+      tags:
+      - pracownik
+      summary: Add a new employee.
+      description: "This endpoint allows for adding a new employee with their name,\
+        \ surname, and a list of zone IDs they have access to."
+      operationId: add_employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pracownik_body'
+        required: true
+      responses:
+        "201":
+          description: Successfully added a new employee
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.pracownik_controller
+  /pracownicy:
+    get:
+      tags:
+      - pracownik
+      summary: Get a list of all employees.
+      description: "This endpoint returns a list of all employees, including their\
+        \ first name, last name, and ID."
+      operationId: get_all_employees
+      responses:
+        "200":
+          description: A list of all employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_3'
+                x-content-type: application/json
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.pracownik_controller
+  /pracownik/{id}:
+    get:
+      tags:
+      - pracownik
+      summary: Get an employee's details.
+      description: "This endpoint returns detailed information about an employee,\
+        \ including their name, surname, ID, and the list of accessible zones."
+      operationId: get_employee_details
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the employee.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Details of the specified employee
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "404":
+          description: Employee not found
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.pracownik_controller
+    put:
+      tags:
+      - pracownik
+      summary: Edit an employee's details.
+      description: "This endpoint allows for editing an employee's name, surname,\
+        \ and the list of accessible zones by specifying their ID."
+      operationId: edit_employee
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the employee to be edited.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pracownik_id_body'
+        required: true
+      responses:
+        "200":
+          description: Successfully updated the employee's details
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "404":
+          description: Employee not found
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.pracownik_controller
+    delete:
+      tags:
+      - pracownik
+      summary: Delete an employee.
+      description: This endpoint allows for the deletion of an employee by specifying
+        their ID.
+      operationId: delete_employee
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the employee to be deleted.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Successfully deleted the employee
+        "400":
+          description: Invalid ID supplied
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+        "404":
+          description: Employee not found
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.pracownik_controller
+  /odbicia:
+    get:
+      tags:
+      - odbicia
+      summary: Get a report of entries and exits.
+      description: |
+        This endpoint returns a report of card entries and exits to and from zones.
+        The `czas_wejscia_od/do` and `czas_wyjscia_od/do` parameters should be in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).
+        The `czas_pobytu` is provided in seconds.
+      operationId: get_entries_exits_report
+      parameters:
+      - name: id_strefy
+        in: query
+        description: Filter by zone ID.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: id_karty
+        in: query
+        description: Filter by card ID.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: czas_wejscia_od
+        in: query
+        description: Filter entries from this datetime in ISO 8601 format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+        example: 2024-01-01T00:00:00Z
+      - name: czas_wejscia_do
+        in: query
+        description: Filter entries until this datetime in ISO 8601 format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+        example: 2024-01-02T00:00:00Z
+      - name: czas_wyjscia_od
+        in: query
+        description: Filter exits from this datetime in ISO 8601 format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+        example: 2024-01-01T08:00:00Z
+      - name: czas_wyjscia_do
+        in: query
+        description: Filter exits until this datetime in ISO 8601 format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+        example: 2024-01-03T00:00:00Z
+      responses:
+        "200":
+          description: A list of entry and exit records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_5'
+                x-content-type: application/json
+        "400":
+          description: Invalid parameters provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.odbicia_controller
+components:
+  schemas:
+    inline_response_400_errors:
+      type: object
+      properties:
+        parameter:
+          type: string
+          description: The name of the parameter that is invalid.
+        message:
+          type: string
+          description: A detailed message about what is wrong with the parameter.
+    inline_response_200_5:
+      type: object
+      properties:
+        id_odbicia:
+          type: integer
+          description: The unique identifier of the record.
+        id_karty:
+          type: integer
+          description: The ID of the card that accessed the zone.
+        id_strefy:
+          type: integer
+          description: The ID of the zone accessed.
+        czas_wejscia:
+          type: string
+          description: The datetime of entry.
+          format: date-time
+        czas_wyjscia:
+          type: string
+          description: The datetime of exit. Nullable if not available.
+          format: date-time
+          nullable: true
+        czas_pobytu:
+          type: integer
+          description: The duration of the stay in seconds. Null if exit time is not
+            available.
+          nullable: true
+          example: 3600
+      example:
+        czas_wejscia: 2000-01-23T04:56:07.000+00:00
+        czas_pobytu: 3600
+        id_odbicia: 0
+        id_karty: 6
+        czas_wyjscia: 2000-01-23T04:56:07.000+00:00
+        id_strefy: 1
+    strefa_id_body:
+      required:
+      - nazwaStrefy
+      type: object
+      properties:
+        nazwaStrefy:
+          type: string
+          description: The new name of the zone.
+    pracownik_body:
+      required:
+      - imie
+      - nazwisko
+      - strefyDostepu
+      type: object
+      properties:
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+        strefyDostepu:
+          type: array
+          items:
+            type: integer
+            description: A list of zone IDs that the employee has access to.
+            format: int64
+    strefa_body:
+      required:
+      - nazwaStrefy
+      type: object
+      properties:
+        nazwaStrefy:
+          type: string
+          description: The name of the zone to be created.
+    admin_login_body:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Admin username.
+        password:
+          type: string
+          description: Admin password.
+          format: password
+    pracownik_id_body:
+      type: object
+      properties:
+        imie:
+          type: string
+          description: The new first name of the employee.
+        nazwisko:
+          type: string
+          description: The new last name of the employee.
+        strefyDostepu:
+          type: array
+          items:
+            type: integer
+            description: The updated list of zone IDs that the employee has access
+              to.
+            format: int64
+    inline_response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the created zone.
+        nazwaStrefy:
+          type: string
+          description: The name of the newly created zone.
+      example:
+        nazwaStrefy: nazwaStrefy
+        id: 0
+    inline_response_200_1:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the zone.
+          format: int64
+        nazwaStrefy:
+          type: string
+          description: The name of the zone.
+      example:
+        nazwaStrefy: nazwaStrefy
+        id: 0
+    inline_response_200:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT token for authentication
+      example:
+        token: token
+    inline_response_200_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the zone.
+          format: int64
+        nazwaStrefy:
+          type: string
+          description: The name of the zone.
+        pracownicy:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_3'
+      example:
+        nazwaStrefy: nazwaStrefy
+        id: 0
+        pracownicy:
+        - imie: imie
+          nazwisko: nazwisko
+          id: 6
+        - imie: imie
+          nazwisko: nazwisko
+          id: 6
+    inline_response_200_3:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the employee.
+          format: int64
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+      example:
+        imie: imie
+        nazwisko: nazwisko
+        id: 6
+    inline_response_200_4:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the employee.
+          format: int64
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+        strefyDostepu:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_1'
+      example:
+        imie: imie
+        nazwisko: nazwisko
+        id: 0
+        strefyDostepu:
+        - nazwaStrefy: nazwaStrefy
+          id: 0
+        - nazwaStrefy: nazwaStrefy
+          id: 0
+    inline_response_400:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The HTTP status code of the error response.
+          format: int32
+        message:
+          type: string
+          description: A human-readable message providing more details about the error.
+        errors:
+          type: array
+          description: A list of errors that specify which parameters are invalid.
+          items:
+            $ref: '#/components/schemas/inline_response_400_errors'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearerAuth
+
