@@ -9,7 +9,7 @@ DEFAULT_ROOT_HASHED_PASSWORD = hash_password('root')
 DUMMY_PRACOWNICY = [
     ('aff123f5agg2', 'Marcin', 'Kowalski'),
     ('h231yu8x21f3', 'Anna', 'Nowak'),
-    ('ddzp81l38vj1', 'Piotr', 'Wiśniewski')
+    ('ddzp81l38vj1', 'Piotr', 'Wiśniewski'),
 ]
 DUMMY_ODBICIA = [
     ('aff123f5agg2', '1', '2023-01-01 08:00:00', '2023-01-01 16:00:00'),
@@ -20,11 +20,13 @@ DUMMY_ODBICIA = [
 DUMMY_UPRAWNIENIA = [
     ('aff123f5agg2', 1),
     ('h231yu8x21f3', 1),
-    ('ddzp81l38vj1', 1)
+    ('ddzp81l38vj1', 1),
+    ('ddzp81l38vj1', 2)
 ]
 DUMMY_STREFY = [
     ('Strefa A',),
-    ('Strefa B',)
+    ('Strefa B',),
+    ('Strefa C',)
 ]
 DUMMY_ADMINISTRATORZY = [
     ('admin1', hash_password('haslo1')),
