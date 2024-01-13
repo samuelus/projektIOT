@@ -1,5 +1,9 @@
 venv
 database/__pycache__/
+swagger_server/__pycache__/
+swagger_server/controllers/__pycache__/
+swagger_server/database.db
+swagger_server/models/__pycache__/
 database.db
 myconnection.session.sql
 .vscode/

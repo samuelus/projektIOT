@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Odbicia</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="imprints.html">Odbicia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="zones.html">Strefy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="employees.html">Pracownicy</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container table-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID KARTY</th>
+            <th>NAZWA STREFY</th>
+            <th>CZAS WEJŚCIA</th>
+            <th>CZAS WYJŚCIA</th>
+        </tr>
+        </thead>
+        <tbody id="data-table-imprints">
+
+        </tbody>
+    </table>
+</div>
+
+<script src="js/imprints.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
