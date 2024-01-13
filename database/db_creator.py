@@ -136,3 +136,6 @@ def reset_db(insert_dummy: bool):
     create_tables()
     if (insert_dummy):
         insert_dummy_values()
+
+if __name__ == "__main__":
+    reset_db(True)

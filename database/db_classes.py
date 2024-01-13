@@ -35,7 +35,7 @@ class Strefa:
         self.nazwa = data[1]
 
     def __repr__(self) -> str:
-        return f"Strefa (id_streft: {self.id_strefy}, nazwa: {self.nazwa})"
+        return f"Strefa (id_strefy: {self.id_strefy}, nazwa: {self.nazwa})"
 
 class Admin:
     def __init__(self, data: tuple) -> None:

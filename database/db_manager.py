@@ -24,7 +24,31 @@ class DbManager:
         odbicia = [Odbicie(data) for data in cursor.fetchall()]
         conn.close()
         return odbicia
-    
+
+    @staticmethod
+    def read_last_entrance_by_card_id(card_id: str) -> "Odbicie":
+        """Read the last entrance for a specific card_id"""
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+                SELECT *
+                FROM Odbicia
+                WHERE id_karty = ?
+                ORDER BY czas_wejscia DESC
+                LIMIT 1
+            ''', (card_id,))
+
+        last_entrance_data = cursor.fetchone()
+
+        conn.close()
+
+        if last_entrance_data:
+            return Odbicie(last_entrance_data)
+        else:
+            return None
+
+
     @staticmethod
     def read_odbicie(id_odbicia: str) -> Odbicie | None:
         """Odbicie o podanym id lub None w przypadku, kiedy takie nie istnieje"""
@@ -160,6 +184,24 @@ class DbManager:
         return uprawnienia
 
     @staticmethod
+    def read_uprawnienia_by_id_karty(id_karty: str) -> list[int]:
+        """Return all uprawnienia for a specific id_karty"""
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+
+        # Execute the query to retrieve uprawnienia based on id_karty
+        cursor.execute('''
+                SELECT * FROM UprawnieniaDostepu
+                WHERE id_karty = ?
+            ''', (id_karty,))
+
+        uprawnienia_data = cursor.fetchall()
+        uprawnienia = [Uprawnienia(data).id_strefy for data in uprawnienia_data]
+
+        conn.close()
+        return uprawnienia
+
+    @staticmethod
     def create_uprawnienia(id_karty: str, id_strefy: int) -> bool:
         """Dodaje nowe uprawnienia. Zwraca false, jeżeli podane uprawniania już istnieją"""
         conn = sqlite3.connect(DB_NAME)
@@ -199,11 +241,11 @@ class DbManager:
         return strefy
     
     @staticmethod
-    def read_strefa(id_strefy: str) -> Strefa | None:
+    def read_strefa(id_strefy: int) -> Strefa | None:
         """Strefa o podanym id lub None w przypadku, kiedy taka nie istnieje"""
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
-        cursor.execute('''SELECT * FROM Odbicia WHERE id_strefy = ?''', (id_strefy,))
+        cursor.execute('''SELECT * FROM Strefy WHERE id_strefy = ?''', (id_strefy,))
         result = cursor.fetchone()
         strefa = Strefa(result) if result is not None else None
         conn.close()
