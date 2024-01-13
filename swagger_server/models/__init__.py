@@ -16,6 +16,6 @@ from swagger_server.models.inline_response201 import InlineResponse201
 from swagger_server.models.inline_response400 import InlineResponse400
 from swagger_server.models.inline_response400_errors import InlineResponse400Errors
 from swagger_server.models.pracownik_body import PracownikBody
-from swagger_server.models.pracownik_id_body import PracownikIdBody
+from swagger_server.models.pracownik_id_karty_body import PracownikIdKartyBody
 from swagger_server.models.strefa_body import StrefaBody
-from swagger_server.models.strefa_id_body import StrefaIdBody
+from swagger_server.models.strefa_id_strefy_body import StrefaIdStrefyBody
