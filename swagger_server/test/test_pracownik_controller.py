@@ -8,7 +8,7 @@ from six import BytesIO
 from swagger_server.models.inline_response2003 import InlineResponse2003  # noqa: E501
 from swagger_server.models.inline_response2004 import InlineResponse2004  # noqa: E501
 from swagger_server.models.pracownik_body import PracownikBody  # noqa: E501
-from swagger_server.models.pracownik_id_body import PracownikIdBody  # noqa: E501
+from swagger_server.models.pracownik_id_karty_body import PracownikIdKartyBody  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
@@ -35,7 +35,7 @@ class TestPracownikController(BaseTestCase):
         Delete an employee.
         """
         response = self.client.open(
-            '/pracownik/{id}'.format(id=789),
+            '/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
             method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -45,9 +45,9 @@ class TestPracownikController(BaseTestCase):
 
         Edit an employee's details.
         """
-        body = PracownikIdBody()
+        body = PracownikIdKartyBody()
         response = self.client.open(
-            '/pracownik/{id}'.format(id=789),
+            '/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')
@@ -71,7 +71,7 @@ class TestPracownikController(BaseTestCase):
         Get an employee's details.
         """
         response = self.client.open(
-            '/pracownik/{id}'.format(id=789),
+            '/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

@@ -9,7 +9,7 @@ from swagger_server.models.inline_response2001 import InlineResponse2001  # noqa
 from swagger_server.models.inline_response2002 import InlineResponse2002  # noqa: E501
 from swagger_server.models.inline_response201 import InlineResponse201  # noqa: E501
 from swagger_server.models.strefa_body import StrefaBody  # noqa: E501
-from swagger_server.models.strefa_id_body import StrefaIdBody  # noqa: E501
+from swagger_server.models.strefa_id_strefy_body import StrefaIdStrefyBody  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
@@ -36,7 +36,7 @@ class TestStrefaController(BaseTestCase):
         Delete a zone.
         """
         response = self.client.open(
-            '/strefa/{id}'.format(id=789),
+            '/strefa/{id_strefy}'.format(id_strefy=789),
             method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -46,9 +46,9 @@ class TestStrefaController(BaseTestCase):
 
         Edit a zone.
         """
-        body = StrefaIdBody()
+        body = StrefaIdStrefyBody()
         response = self.client.open(
-            '/strefa/{id}'.format(id=789),
+            '/strefa/{id_strefy}'.format(id_strefy=789),
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')
@@ -61,7 +61,7 @@ class TestStrefaController(BaseTestCase):
         Get details of a specific zone.
         """
         response = self.client.open(
-            '/strefa/{id}'.format(id=789),
+            '/strefa/{id_strefy}'.format(id_strefy=789),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

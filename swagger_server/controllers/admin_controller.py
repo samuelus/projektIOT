@@ -1,22 +1,39 @@
+import datetime
+
 import connexion
-import six
+import jwt
+from flask import make_response
 
-from swagger_server.models.admin_login_body import AdminLoginBody  # noqa: E501
-from swagger_server.models.inline_response200 import InlineResponse200  # noqa: E501
-from swagger_server import util
+from database import db_manager, cryptography
+from swagger_server.models.inline_response200 import InlineResponse200
 
 
-def login_admin(body):  # noqa: E501
+def login_admin(body):
     """Log in to the system.
 
     This endpoint authenticates users and provides a JWT token for accessing secure endpoints. # noqa: E501
 
-    :param body: 
+    :param body:
     :type body: dict | bytes
 
     :rtype: InlineResponse200
     """
+    database = db_manager.DbManager
     if connexion.request.is_json:
-        body = AdminLoginBody.from_dict(connexion.request.get_json())  # noqa: E501
+        login = body.get('username')
+        password = body.get('password')
 
-    return 'do some magic!'
+        if not login or not password:
+            return 'Missing username or password', 400
+        if database.is_login_and_password_correct(login, password):
+            token = jwt.encode({
+                'public_id': login,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+            }, cryptography.SALT, algorithm="HS256")
+
+            return InlineResponse200(token=token), 200
+
+        else:
+            return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+    else:
+        return make_response('Invalid request format', 400)

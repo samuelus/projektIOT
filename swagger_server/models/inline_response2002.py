@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.inline_response2003 import InlineResponse2003  # noqa: F401,E501
+from swagger_server.models.inline_response2002_pracownicy import InlineResponse2002Pracownicy  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,7 +15,7 @@ class InlineResponse2002(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, nazwa_strefy: str=None, pracownicy: List[InlineResponse2003]=None):  # noqa: E501
+    def __init__(self, id: int=None, nazwa_strefy: str=None, pracownicy: List[InlineResponse2002Pracownicy]=None):  # noqa: E501
         """InlineResponse2002 - a model defined in Swagger
 
         :param id: The id of this InlineResponse2002.  # noqa: E501
@@ -23,12 +23,12 @@ class InlineResponse2002(Model):
         :param nazwa_strefy: The nazwa_strefy of this InlineResponse2002.  # noqa: E501
         :type nazwa_strefy: str
         :param pracownicy: The pracownicy of this InlineResponse2002.  # noqa: E501
-        :type pracownicy: List[InlineResponse2003]
+        :type pracownicy: List[InlineResponse2002Pracownicy]
         """
         self.swagger_types = {
             'id': int,
             'nazwa_strefy': str,
-            'pracownicy': List[InlineResponse2003]
+            'pracownicy': List[InlineResponse2002Pracownicy]
         }
 
         self.attribute_map = {
@@ -98,22 +98,22 @@ class InlineResponse2002(Model):
         self._nazwa_strefy = nazwa_strefy
 
     @property
-    def pracownicy(self) -> List[InlineResponse2003]:
+    def pracownicy(self) -> List[InlineResponse2002Pracownicy]:
         """Gets the pracownicy of this InlineResponse2002.
 
 
         :return: The pracownicy of this InlineResponse2002.
-        :rtype: List[InlineResponse2003]
+        :rtype: List[InlineResponse2002Pracownicy]
         """
         return self._pracownicy
 
     @pracownicy.setter
-    def pracownicy(self, pracownicy: List[InlineResponse2003]):
+    def pracownicy(self, pracownicy: List[InlineResponse2002Pracownicy]):
         """Sets the pracownicy of this InlineResponse2002.
 
 
         :param pracownicy: The pracownicy of this InlineResponse2002.
-        :type pracownicy: List[InlineResponse2003]
+        :type pracownicy: List[InlineResponse2002Pracownicy]
         """
 
         self._pracownicy = pracownicy

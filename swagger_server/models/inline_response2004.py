@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.inline_response2001 import InlineResponse2001  # noqa: F401,E501
+from swagger_server.models.inline_response2004_strefy_dostepu import InlineResponse2004StrefyDostepu  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,23 +15,23 @@ class InlineResponse2004(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, imie: str=None, nazwisko: str=None, strefy_dostepu: List[InlineResponse2001]=None):  # noqa: E501
+    def __init__(self, id: str=None, imie: str=None, nazwisko: str=None, strefy_dostepu: List[InlineResponse2004StrefyDostepu]=None):  # noqa: E501
         """InlineResponse2004 - a model defined in Swagger
 
         :param id: The id of this InlineResponse2004.  # noqa: E501
-        :type id: int
+        :type id: str
         :param imie: The imie of this InlineResponse2004.  # noqa: E501
         :type imie: str
         :param nazwisko: The nazwisko of this InlineResponse2004.  # noqa: E501
         :type nazwisko: str
         :param strefy_dostepu: The strefy_dostepu of this InlineResponse2004.  # noqa: E501
-        :type strefy_dostepu: List[InlineResponse2001]
+        :type strefy_dostepu: List[InlineResponse2004StrefyDostepu]
         """
         self.swagger_types = {
-            'id': int,
+            'id': str,
             'imie': str,
             'nazwisko': str,
-            'strefy_dostepu': List[InlineResponse2001]
+            'strefy_dostepu': List[InlineResponse2004StrefyDostepu]
         }
 
         self.attribute_map = {
@@ -57,24 +57,24 @@ class InlineResponse2004(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> int:
+    def id(self) -> str:
         """Gets the id of this InlineResponse2004.
 
         The unique identifier of the employee.  # noqa: E501
 
         :return: The id of this InlineResponse2004.
-        :rtype: int
+        :rtype: str
         """
         return self._id
 
     @id.setter
-    def id(self, id: int):
+    def id(self, id: str):
         """Sets the id of this InlineResponse2004.
 
         The unique identifier of the employee.  # noqa: E501
 
         :param id: The id of this InlineResponse2004.
-        :type id: int
+        :type id: str
         """
 
         self._id = id
@@ -126,22 +126,22 @@ class InlineResponse2004(Model):
         self._nazwisko = nazwisko
 
     @property
-    def strefy_dostepu(self) -> List[InlineResponse2001]:
+    def strefy_dostepu(self) -> List[InlineResponse2004StrefyDostepu]:
         """Gets the strefy_dostepu of this InlineResponse2004.
 
 
         :return: The strefy_dostepu of this InlineResponse2004.
-        :rtype: List[InlineResponse2001]
+        :rtype: List[InlineResponse2004StrefyDostepu]
         """
         return self._strefy_dostepu
 
     @strefy_dostepu.setter
-    def strefy_dostepu(self, strefy_dostepu: List[InlineResponse2001]):
+    def strefy_dostepu(self, strefy_dostepu: List[InlineResponse2004StrefyDostepu]):
         """Sets the strefy_dostepu of this InlineResponse2004.
 
 
         :param strefy_dostepu: The strefy_dostepu of this InlineResponse2004.
-        :type strefy_dostepu: List[InlineResponse2001]
+        :type strefy_dostepu: List[InlineResponse2004StrefyDostepu]
         """
 
         self._strefy_dostepu = strefy_dostepu

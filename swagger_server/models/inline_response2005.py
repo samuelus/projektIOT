@@ -14,13 +14,13 @@ class InlineResponse2005(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id_odbicia: int=None, id_karty: int=None, id_strefy: int=None, czas_wejscia: datetime=None, czas_wyjscia: datetime=None, czas_pobytu: int=None):  # noqa: E501
+    def __init__(self, id_odbicia: int=None, id_karty: str=None, id_strefy: int=None, czas_wejscia: datetime=None, czas_wyjscia: datetime=None, czas_pobytu: int=None):  # noqa: E501
         """InlineResponse2005 - a model defined in Swagger
 
         :param id_odbicia: The id_odbicia of this InlineResponse2005.  # noqa: E501
         :type id_odbicia: int
         :param id_karty: The id_karty of this InlineResponse2005.  # noqa: E501
-        :type id_karty: int
+        :type id_karty: str
         :param id_strefy: The id_strefy of this InlineResponse2005.  # noqa: E501
         :type id_strefy: int
         :param czas_wejscia: The czas_wejscia of this InlineResponse2005.  # noqa: E501
@@ -32,7 +32,7 @@ class InlineResponse2005(Model):
         """
         self.swagger_types = {
             'id_odbicia': int,
-            'id_karty': int,
+            'id_karty': str,
             'id_strefy': int,
             'czas_wejscia': datetime,
             'czas_wyjscia': datetime,
@@ -89,24 +89,24 @@ class InlineResponse2005(Model):
         self._id_odbicia = id_odbicia
 
     @property
-    def id_karty(self) -> int:
+    def id_karty(self) -> str:
         """Gets the id_karty of this InlineResponse2005.
 
         The ID of the card that accessed the zone.  # noqa: E501
 
         :return: The id_karty of this InlineResponse2005.
-        :rtype: int
+        :rtype: str
         """
         return self._id_karty
 
     @id_karty.setter
-    def id_karty(self, id_karty: int):
+    def id_karty(self, id_karty: str):
         """Sets the id_karty of this InlineResponse2005.
 
         The ID of the card that accessed the zone.  # noqa: E501
 
         :param id_karty: The id_karty of this InlineResponse2005.
-        :type id_karty: int
+        :type id_karty: str
         """
 
         self._id_karty = id_karty

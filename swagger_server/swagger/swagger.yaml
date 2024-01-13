@@ -93,7 +93,7 @@ paths:
       security:
       - bearerAuth: []
       x-openapi-router-controller: swagger_server.controllers.strefa_controller
-  /strefa/{id}:
+  /strefa/{id_strefy}:
     get:
       tags:
       - strefa
@@ -102,7 +102,7 @@ paths:
         \ ID, name, and a list of assigned employees."
       operationId: get_zone_details
       parameters:
-      - name: id
+      - name: id_strefy
         in: path
         description: The unique identifier of the zone.
         required: true
@@ -133,7 +133,7 @@ paths:
         ID and providing a new name.
       operationId: edit_zone
       parameters:
-      - name: id
+      - name: id_strefy
         in: path
         description: The unique identifier of the zone to be edited.
         required: true
@@ -146,7 +146,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/strefa_id_body'
+              $ref: '#/components/schemas/strefa_id_strefy_body'
         required: true
       responses:
         "200":
@@ -168,7 +168,7 @@ paths:
         ID.
       operationId: delete_zone
       parameters:
-      - name: id
+      - name: id_strefy
         in: path
         description: The unique identifier of the zone to be deleted.
         required: true
@@ -210,6 +210,8 @@ paths:
           description: Invalid input
         "401":
           description: Unauthorized - Invalid or no authentication token provided
+        "409":
+          description: Employee with provided ID already exists
       security:
       - bearerAuth: []
       x-openapi-router-controller: swagger_server.controllers.pracownik_controller
@@ -236,7 +238,7 @@ paths:
       security:
       - bearerAuth: []
       x-openapi-router-controller: swagger_server.controllers.pracownik_controller
-  /pracownik/{id}:
+  /pracownik/{id_karty}:
     get:
       tags:
       - pracownik
@@ -245,15 +247,14 @@ paths:
         \ including their name, surname, ID, and the list of accessible zones."
       operationId: get_employee_details
       parameters:
-      - name: id
+      - name: id_karty
         in: path
         description: The unique identifier of the employee.
         required: true
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int64
+          type: string
       responses:
         "200":
           description: Details of the specified employee
@@ -276,20 +277,19 @@ paths:
         \ and the list of accessible zones by specifying their ID."
       operationId: edit_employee
       parameters:
-      - name: id
+      - name: id_karty
         in: path
         description: The unique identifier of the employee to be edited.
         required: true
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int64
+          type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/pracownik_id_body'
+              $ref: '#/components/schemas/pracownik_id_karty_body'
         required: true
       responses:
         "200":
@@ -311,15 +311,14 @@ paths:
         their ID.
       operationId: delete_employee
       parameters:
-      - name: id
+      - name: id_karty
         in: path
         description: The unique identifier of the employee to be deleted.
         required: true
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int64
+          type: string
       responses:
         "200":
           description: Successfully deleted the employee
@@ -358,7 +357,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       - name: czas_wejscia_od
         in: query
         description: Filter entries from this datetime in ISO 8601 format.
@@ -422,6 +421,34 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.odbicia_controller
 components:
   schemas:
+    inline_response_200_2_pracownicy:
+      type: object
+      properties:
+        id_karty:
+          type: string
+          description: The unique identifier of the employee.
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+      example:
+        imie: imie
+        id_karty: id_karty
+        nazwisko: nazwisko
+    inline_response_200_4_strefyDostepu:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the zone.
+        nazwaStrefy:
+          type: string
+          description: The name of the zone.
+      example:
+        nazwaStrefy: nazwaStrefy
+        id: id
     inline_response_400_errors:
       type: object
       properties:
@@ -431,6 +458,22 @@ components:
         message:
           type: string
           description: A detailed message about what is wrong with the parameter.
+    pracownik_id_karty_body:
+      type: object
+      properties:
+        imie:
+          type: string
+          description: The new first name of the employee.
+        nazwisko:
+          type: string
+          description: The new last name of the employee.
+        strefyDostepu:
+          type: array
+          items:
+            type: integer
+            description: The updated list of zone IDs that the employee has access
+              to.
+            format: int64
     inline_response_200_5:
       type: object
       properties:
@@ -438,7 +481,7 @@ components:
           type: integer
           description: The unique identifier of the record.
         id_karty:
-          type: integer
+          type: string
           description: The ID of the card that accessed the zone.
         id_strefy:
           type: integer
@@ -462,19 +505,12 @@ components:
         czas_wejscia: 2000-01-23T04:56:07.000+00:00
         czas_pobytu: 3600
         id_odbicia: 0
-        id_karty: 6
+        id_karty: id_karty
         czas_wyjscia: 2000-01-23T04:56:07.000+00:00
-        id_strefy: 1
-    strefa_id_body:
-      required:
-      - nazwaStrefy
-      type: object
-      properties:
-        nazwaStrefy:
-          type: string
-          description: The new name of the zone.
+        id_strefy: 6
     pracownik_body:
       required:
+      - id
       - imie
       - nazwisko
       - strefyDostepu
@@ -486,6 +522,9 @@ components:
         nazwisko:
           type: string
           description: The last name of the employee.
+        id:
+          type: string
+          description: The unique identifier of the employee's card.
         strefyDostepu:
           type: array
           items:
@@ -513,22 +552,6 @@ components:
           type: string
           description: Admin password.
           format: password
-    pracownik_id_body:
-      type: object
-      properties:
-        imie:
-          type: string
-          description: The new first name of the employee.
-        nazwisko:
-          type: string
-          description: The new last name of the employee.
-        strefyDostepu:
-          type: array
-          items:
-            type: integer
-            description: The updated list of zone IDs that the employee has access
-              to.
-            format: int64
     inline_response_201:
       type: object
       properties:
@@ -554,6 +577,14 @@ components:
       example:
         nazwaStrefy: nazwaStrefy
         id: 0
+    strefa_id_strefy_body:
+      required:
+      - nazwaStrefy
+      type: object
+      properties:
+        nazwaStrefy:
+          type: string
+          description: The new name of the zone.
     inline_response_200:
       type: object
       properties:
@@ -575,24 +606,23 @@ components:
         pracownicy:
           type: array
           items:
-            $ref: '#/components/schemas/inline_response_200_3'
+            $ref: '#/components/schemas/inline_response_200_2_pracownicy'
       example:
         nazwaStrefy: nazwaStrefy
         id: 0
         pracownicy:
         - imie: imie
+          id_karty: id_karty
           nazwisko: nazwisko
-          id: 6
         - imie: imie
+          id_karty: id_karty
           nazwisko: nazwisko
-          id: 6
     inline_response_200_3:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: The unique identifier of the employee.
-          format: int64
         imie:
           type: string
           description: The first name of the employee.
@@ -602,14 +632,13 @@ components:
       example:
         imie: imie
         nazwisko: nazwisko
-        id: 6
+        id: id
     inline_response_200_4:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: The unique identifier of the employee.
-          format: int64
         imie:
           type: string
           description: The first name of the employee.
@@ -619,16 +648,16 @@ components:
         strefyDostepu:
           type: array
           items:
-            $ref: '#/components/schemas/inline_response_200_1'
+            $ref: '#/components/schemas/inline_response_200_4_strefyDostepu'
       example:
         imie: imie
         nazwisko: nazwisko
-        id: 0
+        id: id
         strefyDostepu:
         - nazwaStrefy: nazwaStrefy
-          id: 0
+          id: id
         - nazwaStrefy: nazwaStrefy
-          id: 0
+          id: id
     inline_response_400:
       type: object
       properties:
