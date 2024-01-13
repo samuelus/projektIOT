@@ -14,18 +14,18 @@ class InlineResponse2003(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, imie: str=None, nazwisko: str=None):  # noqa: E501
+    def __init__(self, id: str=None, imie: str=None, nazwisko: str=None):  # noqa: E501
         """InlineResponse2003 - a model defined in Swagger
 
         :param id: The id of this InlineResponse2003.  # noqa: E501
-        :type id: int
+        :type id: str
         :param imie: The imie of this InlineResponse2003.  # noqa: E501
         :type imie: str
         :param nazwisko: The nazwisko of this InlineResponse2003.  # noqa: E501
         :type nazwisko: str
         """
         self.swagger_types = {
-            'id': int,
+            'id': str,
             'imie': str,
             'nazwisko': str
         }
@@ -51,24 +51,24 @@ class InlineResponse2003(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> int:
+    def id(self) -> str:
         """Gets the id of this InlineResponse2003.
 
         The unique identifier of the employee.  # noqa: E501
 
         :return: The id of this InlineResponse2003.
-        :rtype: int
+        :rtype: str
         """
         return self._id
 
     @id.setter
-    def id(self, id: int):
+    def id(self, id: str):
         """Sets the id of this InlineResponse2003.
 
         The unique identifier of the employee.  # noqa: E501
 
         :param id: The id of this InlineResponse2003.
-        :type id: int
+        :type id: str
         """
 
         self._id = id

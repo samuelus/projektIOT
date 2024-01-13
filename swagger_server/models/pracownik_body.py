@@ -14,29 +14,34 @@ class PracownikBody(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, imie: str=None, nazwisko: str=None, strefy_dostepu: List[int]=None):  # noqa: E501
+    def __init__(self, imie: str=None, nazwisko: str=None, id: str=None, strefy_dostepu: List[int]=None):  # noqa: E501
         """PracownikBody - a model defined in Swagger
 
         :param imie: The imie of this PracownikBody.  # noqa: E501
         :type imie: str
         :param nazwisko: The nazwisko of this PracownikBody.  # noqa: E501
         :type nazwisko: str
+        :param id: The id of this PracownikBody.  # noqa: E501
+        :type id: str
         :param strefy_dostepu: The strefy_dostepu of this PracownikBody.  # noqa: E501
         :type strefy_dostepu: List[int]
         """
         self.swagger_types = {
             'imie': str,
             'nazwisko': str,
+            'id': str,
             'strefy_dostepu': List[int]
         }
 
         self.attribute_map = {
             'imie': 'imie',
             'nazwisko': 'nazwisko',
+            'id': 'id',
             'strefy_dostepu': 'strefyDostepu'
         }
         self._imie = imie
         self._nazwisko = nazwisko
+        self._id = id
         self._strefy_dostepu = strefy_dostepu
 
     @classmethod
@@ -99,6 +104,31 @@ class PracownikBody(Model):
             raise ValueError("Invalid value for `nazwisko`, must not be `None`")  # noqa: E501
 
         self._nazwisko = nazwisko
+
+    @property
+    def id(self) -> str:
+        """Gets the id of this PracownikBody.
+
+        The unique identifier of the employee's card.  # noqa: E501
+
+        :return: The id of this PracownikBody.
+        :rtype: str
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id: str):
+        """Sets the id of this PracownikBody.
+
+        The unique identifier of the employee's card.  # noqa: E501
+
+        :param id: The id of this PracownikBody.
+        :type id: str
+        """
+        if id is None:
+            raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
+
+        self._id = id
 
     @property
     def strefy_dostepu(self) -> List[int]:

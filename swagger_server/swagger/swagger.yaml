@@ -252,8 +252,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int64
+          type: string
       responses:
         "200":
           description: Details of the specified employee
@@ -283,8 +282,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int64
+          type: string
       requestBody:
         content:
           application/json:
@@ -318,8 +316,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int64
+          type: string
       responses:
         "200":
           description: Successfully deleted the employee
@@ -358,7 +355,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       - name: czas_wejscia_od
         in: query
         description: Filter entries from this datetime in ISO 8601 format.
@@ -422,6 +419,34 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.odbicia_controller
 components:
   schemas:
+    inline_response_200_2_pracownicy:
+      type: object
+      properties:
+        id_karty:
+          type: string
+          description: The unique identifier of the employee.
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+      example:
+        imie: imie
+        id_karty: id_karty
+        nazwisko: nazwisko
+    inline_response_200_4_strefyDostepu:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the zone.
+        nazwaStrefy:
+          type: string
+          description: The name of the zone.
+      example:
+        nazwaStrefy: nazwaStrefy
+        id: id
     inline_response_400_errors:
       type: object
       properties:
@@ -438,7 +463,7 @@ components:
           type: integer
           description: The unique identifier of the record.
         id_karty:
-          type: integer
+          type: string
           description: The ID of the card that accessed the zone.
         id_strefy:
           type: integer
@@ -462,9 +487,9 @@ components:
         czas_wejscia: 2000-01-23T04:56:07.000+00:00
         czas_pobytu: 3600
         id_odbicia: 0
-        id_karty: 6
+        id_karty: id_karty
         czas_wyjscia: 2000-01-23T04:56:07.000+00:00
-        id_strefy: 1
+        id_strefy: 6
     strefa_id_body:
       required:
       - nazwaStrefy
@@ -475,6 +500,7 @@ components:
           description: The new name of the zone.
     pracownik_body:
       required:
+      - id
       - imie
       - nazwisko
       - strefyDostepu
@@ -486,6 +512,9 @@ components:
         nazwisko:
           type: string
           description: The last name of the employee.
+        id:
+          type: string
+          description: The unique identifier of the employee's card.
         strefyDostepu:
           type: array
           items:
@@ -575,24 +604,23 @@ components:
         pracownicy:
           type: array
           items:
-            $ref: '#/components/schemas/inline_response_200_3'
+            $ref: '#/components/schemas/inline_response_200_2_pracownicy'
       example:
         nazwaStrefy: nazwaStrefy
         id: 0
         pracownicy:
         - imie: imie
+          id_karty: id_karty
           nazwisko: nazwisko
-          id: 6
         - imie: imie
+          id_karty: id_karty
           nazwisko: nazwisko
-          id: 6
     inline_response_200_3:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: The unique identifier of the employee.
-          format: int64
         imie:
           type: string
           description: The first name of the employee.
@@ -602,14 +630,13 @@ components:
       example:
         imie: imie
         nazwisko: nazwisko
-        id: 6
+        id: id
     inline_response_200_4:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: The unique identifier of the employee.
-          format: int64
         imie:
           type: string
           description: The first name of the employee.
@@ -619,16 +646,16 @@ components:
         strefyDostepu:
           type: array
           items:
-            $ref: '#/components/schemas/inline_response_200_1'
+            $ref: '#/components/schemas/inline_response_200_4_strefyDostepu'
       example:
         imie: imie
         nazwisko: nazwisko
-        id: 0
+        id: id
         strefyDostepu:
         - nazwaStrefy: nazwaStrefy
-          id: 0
+          id: id
         - nazwaStrefy: nazwaStrefy
-          id: 0
+          id: id
     inline_response_400:
       type: object
       properties:

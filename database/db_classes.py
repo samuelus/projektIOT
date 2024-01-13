@@ -12,6 +12,14 @@ class Odbicie:
     def __repr__(self) -> str:
         return f"Odbicie (id_odbicia: {self.id_odbicia}, id_karty: '{self.id_karty}', id_strefy: {self.id_strefy}, czas_wejscia: '{self.czas_wejscia}', czas_wyjscia: '{self.czas_wyjscia}')"
 
+    def to_dict(self):
+        return {
+            'id_odbicia': self.id_odbicia,
+            'id_karty': self.id_karty,
+            'id_strefy': self.id_strefy,
+            'czas_wejscia': self.czas_wejscia.isoformat() if self.czas_wejscia else None,
+            'czas_wyjscia': self.czas_wyjscia.isoformat() if self.czas_wyjscia else None
+        }
 class Pracownik:
     def __init__(self, data: tuple) -> None:
         self.id_karty = data[0]

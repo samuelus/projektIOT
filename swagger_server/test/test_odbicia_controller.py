@@ -19,7 +19,7 @@ class TestOdbiciaController(BaseTestCase):
         Get a report of entries and exits.
         """
         query_string = [('id_strefy', 56),
-                        ('id_karty', 56),
+                        ('id_karty', 'id_karty_example'),
                         ('czas_wejscia_od', '2013-10-20T19:20:30+01:00'),
                         ('czas_wejscia_do', '2013-10-20T19:20:30+01:00'),
                         ('czas_wyjscia_od', '2013-10-20T19:20:30+01:00'),

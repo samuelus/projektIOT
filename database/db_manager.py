@@ -199,7 +199,7 @@ class DbManager:
         return strefy
     
     @staticmethod
-    def read_strefa(id_strefy: str) -> Strefa | None:
+    def read_strefa(id_strefy: int) -> Strefa | None:
         """Strefa o podanym id lub None w przypadku, kiedy taka nie istnieje"""
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
