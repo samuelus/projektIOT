@@ -19,17 +19,15 @@ def login_admin(body):
     :rtype: InlineResponse200
     """
     database = db_manager.DbManager
-    admins = database.read_all_administratorzy()
     if connexion.request.is_json:
         login = body.get('username')
         password = body.get('password')
 
         if not login or not password:
             return 'Missing username or password', 400
-        admin = next((admin for admin in admins if admin.login == login), None)
-        if admin is not None and cryptography.verify_password(password, admin.hash_hasla):
+        if database.is_login_and_password_correct(login, password):
             token = jwt.encode({
-                'public_id': admin.login,
+                'public_id': login,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
             }, cryptography.SALT, algorithm="HS256")
 

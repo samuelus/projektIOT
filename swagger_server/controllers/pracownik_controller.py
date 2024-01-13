@@ -118,13 +118,11 @@ def get_employee_details(id_karty):  # noqa: E501
     """
     pracownik = database.read_pracownik(id_karty)
     if pracownik:
-        pracownik_dict = pracownik_to_dict(pracownik)
-        pracownik_dict["strefyDostepu"] = \
-            [filtered_uprawnienia.id_strefy for filtered_uprawnienia in database.read_all_uprawnienia()
-                                            if filtered_uprawnienia.id_karty == id_karty]
-        return InlineResponse2004(id=pracownik_dict['id'],
-                                  imie=pracownik_dict['imie'],
-                                  nazwisko=pracownik_dict['nazwisko'],
-                                  strefy_dostepu=pracownik_dict["strefyDostepu"])
+        strefy = [filtered_uprawnienia.id_strefy for filtered_uprawnienia in database.read_all_uprawnienia()
+                                                 if filtered_uprawnienia.id_karty == id_karty]
+        return InlineResponse2004(id=pracownik.id_karty,
+                                  imie=pracownik.imie,
+                                  nazwisko=pracownik.nazwisko,
+                                  strefy_dostepu=strefy)
     else:
         return 'No employee found with provided ID', 404

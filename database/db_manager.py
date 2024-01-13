@@ -203,7 +203,7 @@ class DbManager:
         """Strefa o podanym id lub None w przypadku, kiedy taka nie istnieje"""
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
-        cursor.execute('''SELECT * FROM Odbicia WHERE id_strefy = ?''', (id_strefy,))
+        cursor.execute('''SELECT * FROM Strefy WHERE id_strefy = ?''', (id_strefy,))
         result = cursor.fetchone()
         strefa = Strefa(result) if result is not None else None
         conn.close()
