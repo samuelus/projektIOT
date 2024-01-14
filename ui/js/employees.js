@@ -74,6 +74,19 @@ function populateEmployeesTable(data) {
         surnameEmployeeCell.textContent = item.nazwisko;
         row.appendChild(surnameEmployeeCell);
 
+        const deleteButtonCell = document.createElement('td');
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Usuń';
+        deleteButton.className = 'btn btn-danger';
+        deleteButton.setAttribute('data-id', item.id);
+        deleteButton.onclick = function () {
+            deleteEmployee(item.id);
+        };
+        deleteButtonCell.appendChild(deleteButton);
+        row.appendChild(deleteButtonCell);
+
+        tableBody.appendChild(row);
+
         tableBody.appendChild(row);
     });
 }
@@ -106,6 +119,27 @@ function addEmployee(employeeData) {
         })
         .catch(error => {
             console.error('Error:', error);
+        });
+}
+
+function deleteEmployee(employeeId) {
+    fetch(`http://127.0.0.1:8080/api/pracownik/${employeeId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log(`Pracownik with ID ${employeeId} deleted successfully.`);
+            return fetchDataFromEmployeeEndpoint();
+        })
+        .then(populateEmployeesTable)
+        .catch(error => {
+            console.error('Error deleting employee:', error);
         });
 }
 
