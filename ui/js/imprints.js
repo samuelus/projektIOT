@@ -1,7 +1,18 @@
-function fetchDataFromEndpoint() {
-    return fetch('http://127.0.0.1:8080/api/odbicia')
-        .then(response => response.json())
-        .catch(error => console.error('Error:', error));
+function fetchDataFromImprintEndpoint() {
+    return fetch('http://127.0.0.1:8080/api/odbicia', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 function populateImprintsTable(data) {
@@ -20,11 +31,11 @@ function populateImprintsTable(data) {
         row.appendChild(idStrefyCell);
 
         const czasWejsciaCell = document.createElement('td');
-        czasWejsciaCell.textContent = item.czas_wejscia ? item.czas_wejscia : "Working...";
+        czasWejsciaCell.textContent = item.czas_wejscia;
         row.appendChild(czasWejsciaCell);
 
         const czasWyjsciaCell = document.createElement('td');
-        czasWyjsciaCell.textContent = item.czas_wyjscia;
+        czasWyjsciaCell.textContent = item.czas_wyjscia ? item.czas_wyjscia : "Working...";
         row.appendChild(czasWyjsciaCell);
 
         tableBody.appendChild(row);
@@ -33,5 +44,5 @@ function populateImprintsTable(data) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetchDataFromEndpoint().then(data => populateImprintsTable(data));
+    fetchDataFromImprintEndpoint().then(data => populateImprintsTable(data));
 });

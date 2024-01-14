@@ -28,7 +28,7 @@ function performLogin(loginData) {
 
 function handleSuccessfulLogin(data) {
     localStorage.setItem('token', data.token);
-    window.location.href = 'zones.html';
+    window.location.href = 'imprints.html';
 }
 
 function handleLoginError(error) {
