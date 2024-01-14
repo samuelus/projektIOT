@@ -11,3 +11,4 @@ myconnection.session.sql
 database/__pycache__
 __pycache__
 tms/__pycache__
+tms/.env
