@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+<div class="login-container">
+    <h2 class="login-title">Login</h2>
+    <p class="login-description">Zaloguj się do panelu administracyjnego.</p>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">Login</label>
+            <input type="text" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <div class="d-flex justify-content-between full-width">
+            <button type="submit" class="btn btn-primary mb-2 mt-4">Zaloguj się</button>
+        </div>
+    </form>
+    <div id="error-message" class="error-message" style="color: red; display: none;"></div>
+</div>
+
+<script src="js/login.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Odbicia</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/imprints.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="imprints.html">Odbicia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="zones.html">Strefy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="employees.html">Pracownicy</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container table-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID KARTY</th>
+            <th>NAZWA STREFY</th>
+            <th>CZAS WEJŚCIA</th>
+            <th>CZAS WYJŚCIA</th>
+        </tr>
+        </thead>
+        <tbody id="data-table-imprints">
+
+        </tbody>
+    </table>
+</div>
+
+<script src="js/imprints.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

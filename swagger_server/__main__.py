@@ -3,10 +3,13 @@
 import connexion
 
 from swagger_server import encoder
-
+from database import db_manager
+from flask_cors import CORS
 
 def main():
+    db_manager.DbManager.clear_database(True)
     app = connexion.App(__name__, specification_dir='swagger/')
+    CORS(app.app)
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api('swagger.yaml', arguments={'title': 'IOT Project - OpenAPI 3.0'}, pythonic_params=True)
     app.run(port=8080)
