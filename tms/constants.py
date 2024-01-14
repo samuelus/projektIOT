@@ -1,3 +1,8 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 messages = {
     "TMS-1001": "There is no registered card in the system",
     "TMS-1002": "There is no such strefa",
@@ -10,4 +15,5 @@ messages = {
 
 MQTT_ODBICIA_TOPIC = "/odbicia"
 MQTT_ODBICIA_STREFA_TOPIC = "/odbicia/strefa"
-BROKER = 'localhost'
+BROKER = os.getenv('BROKER_ADDRESS') or 'localhost'
+ID_STREFY = os.getenv('ID_STREFY') or 1
