@@ -89,8 +89,3 @@ class TMSLogicProcessor:
             client.publish(topic_to_publish, json.dumps(response))
         except Exception as e:
             print(f"Something went wrong while processing event from {topic}")
-
-
-if __name__ == "__main__":
-    db_manager.DbManager.clear_database(True)
-    tms_processor = TMSLogicProcessor()
