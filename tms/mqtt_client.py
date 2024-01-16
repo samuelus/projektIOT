@@ -5,9 +5,23 @@ from constants import *
 import traceback
 import time
 
+from PIL import Image, ImageDraw, ImageFont
+import lib.oled.SSD1331 as SSD1331
+
+disp = SSD1331.SSD1331()
+disp.Init()
+
+def print_on_screen(text):
+    image1 = Image.new("RGB", (disp.width, disp.height), "BLACK")
+    draw = ImageDraw.Draw(image1)
+    fontSmall = ImageFont.truetype('./lib/oled/Font.ttf', 13)
+    draw.text((0, 0), text, font=fontSmall)
+    disp.ShowImage(image1, 0, 0)
 
 class MyMQTTClient:
     def __init__(self, on_get_response):
+
+        print(f"Connecting with broker {BROKER}")
         self.client = mqtt.Client()
         self.client.connect(BROKER)
         print(f"Connection with broker {BROKER} established")
@@ -51,8 +65,11 @@ class MyMQTTClient:
                 final_message = self.process_work_duration(json.loads(m_in['body']))
             else:
                 final_message = messages[code]
+            
+            print("final message:" + final_message)
+            print_on_screen(final_message)
+            # self.on_get_response("hello")
 
-            self.on_get_response(final_message)
 
         except Exception as e:
             traceback.print_exc()

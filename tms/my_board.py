@@ -21,7 +21,7 @@ def format_time(time):
 
 class LedController:
     def __init__(self, brightness=1.0 / 32, auto_write=False):
-        self.pixels = neopixel.NeoPixel(board.D18, 8, brightness=brightness, auto_write=auto_write)
+        self.pixels = neopixel.NeoPixel(my_board.D18, 8, brightness=brightness, auto_write=auto_write)
 
     def set_color(self, color):
         self.pixels.fill(color)
