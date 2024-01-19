@@ -9,7 +9,7 @@ function handleLoginFormSubmission(event) {
 }
 
 function performLogin(loginData) {
-    fetch('http://127.0.0.1:8080/api/admin/login', {
+    fetch('api/admin/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
