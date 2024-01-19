@@ -11,12 +11,41 @@ import lib.oled.SSD1331 as SSD1331
 disp = SSD1331.SSD1331()
 disp.Init()
 
+
+### OLD VERSION , DELETE IF NEWER ONE WORKS ###
+# def print_on_screen(text):
+#     image1 = Image.new("RGB", (disp.width, disp.height), "BLACK")
+#     draw = ImageDraw.Draw(image1)
+#     fontSmall = ImageFont.truetype('./lib/oled/Font.ttf', 13)
+#     draw.text((0, 0), text, font=fontSmall)
+#     disp.ShowImage(image1, 0, 0)
+
 def print_on_screen(text):
+    max_width = -1
+    assert max_width == -1, "USTAW MAX_WIDTH"
     image1 = Image.new("RGB", (disp.width, disp.height), "BLACK")
     draw = ImageDraw.Draw(image1)
     fontSmall = ImageFont.truetype('./lib/oled/Font.ttf', 13)
-    draw.text((0, 0), text, font=fontSmall)
+
+    lines = []
+    for line in text.split('\n'):
+        while line:
+            for j in range(len(line)):
+                if draw.textsize(line[:j + 1], font=fontSmall)[0] > max_width:
+                    break
+            else:
+                j += 1
+            lines.append(line[:j])
+            line = line[j:]
+
+    y = 0
+    line_height = draw.textsize('A', font=fontSmall)[1]
+    for line in lines:
+        draw.text((0, y), line, font=fontSmall)
+        y += line_height
+
     disp.ShowImage(image1, 0, 0)
+
 
 class MyMQTTClient:
     def __init__(self, on_get_response):
@@ -65,7 +94,7 @@ class MyMQTTClient:
                 final_message = self.process_work_duration(json.loads(m_in['body']))
             else:
                 final_message = messages[code]
-            
+
             print("final message:" + final_message)
             print_on_screen(final_message)
             # self.on_get_response("hello")
