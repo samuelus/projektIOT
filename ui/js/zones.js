@@ -1,6 +1,6 @@
 function fetchDataFromZoneEndpoint() {
 
-    return fetch('http://127.0.0.1:8080/api/strefy', {
+    return fetch('api/strefy', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ function fetchDataFromZoneEndpoint() {
 }
 
 function addZone(zoneData) {
-    fetch('http://127.0.0.1:8080/api/strefa', {
+    fetch('api/strefa', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function addZone(zoneData) {
 }
 
 function deleteZone(zoneId) {
-    fetch(`http://127.0.0.1:8080/api/strefa/${zoneId}`, {
+    fetch(`api/strefa/${zoneId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

@@ -34,6 +34,6 @@ def login_admin(body):
             return InlineResponse200(token=token), 200
 
         else:
-            return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+            return make_response('Could not verify', 401, {'WWW-Authenticate-pls': 'Basic realm="Login required!"'})
     else:
         return make_response('Invalid request format', 400)

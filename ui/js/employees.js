@@ -1,6 +1,6 @@
 function fetchDataFromEmployeeEndpoint() {
 
-    return fetch('http://127.0.0.1:8080/api/pracownicy', {
+    return fetch('api/pracownicy', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ $('#addEmployeeModal').on('show.bs.modal', function () {
 
 function fetchDataFromZoneEndpoint() {
 
-    return fetch('http://127.0.0.1:8080/api/strefy', {
+    return fetch('api/strefy', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ function initializeEmployeeEventListeners() {
 }
 
 function addEmployee(employeeData) {
-    fetch('http://127.0.0.1:8080/api/pracownik', {
+    fetch('api/pracownik', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ function addEmployee(employeeData) {
 }
 
 function deleteEmployee(employeeId) {
-    fetch(`http://127.0.0.1:8080/api/pracownik/${employeeId}`, {
+    fetch(`api/pracownik/${employeeId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
