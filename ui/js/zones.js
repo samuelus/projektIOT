@@ -62,6 +62,32 @@ function deleteZone(zoneId) {
         });
 }
 
+function editZone(zoneId, newName) {
+    fetch(`api/strefa/${zoneId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        body: JSON.stringify(newName)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            $('#editZoneModal').modal('hide');
+            fetchDataFromZoneEndpoint().then(populateZonesTable);
+        })
+        .catch(error => {
+            console.error('Error editing zone:', error);
+        });
+}
+
+
 function populateZonesTable(data) {
     //console.log(data);
     const tableBody = document.getElementById('data-table-zones');
@@ -89,24 +115,101 @@ function populateZonesTable(data) {
         deleteButtonCell.appendChild(deleteButton);
         row.appendChild(deleteButtonCell);
 
+        const editButtonCell = document.createElement('td');
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edytuj';
+        editButton.className = 'btn btn-success';
+        editButton.setAttribute('data-id', item.id);
+        editButton.setAttribute('data-name', item.nazwaStrefy);
+        editButton.onclick = function () {
+            openEditModal(item.id, item.nazwaStrefy);
+        };
+        editButtonCell.appendChild(editButton);
+        row.appendChild(editButtonCell);
+
         tableBody.appendChild(row);
     });
+}
+
+function openEditModal(id, name) {
+    document.getElementById('editZoneId').value = id;
+    document.getElementById('editZoneName').value = name;
+    $('#editZoneModal').modal('show');
 }
 
 function initializeEventListeners() {
     fetchDataFromZoneEndpoint().then(data => populateZonesTable(data));
 
     document.getElementById('addZoneButton').addEventListener('click', handleAddZoneClick);
+    document.getElementById('editZoneButton').addEventListener('click', handleEditZoneClick);
 }
 
 function handleAddZoneClick() {
     const zoneName = document.getElementById('zoneName').value;
-    console.log("Zone Name:", zoneName);
+    console.log("Added zone Name:", zoneName);
     if (!zoneName) {
-        alert("Proszę wprowadzić nazwę strefy.");
+        showAlertForTime('emptyZoneNameAlertAdd', 3000);
+        return;
+    }
+    if (doesZoneExist(zoneName)) {
+        showAlertForTime('duplicateZoneNameAlertAdd', 3000);
+        return;
+    }
+    if (!isValidInput(zoneName)) {
+        showAlertForTime('invalidZoneNameAlertAdd', 3000);
         return;
     }
     addZone({nazwaStrefy: zoneName});
+}
+
+function handleEditZoneClick() {
+    const zoneId = document.getElementById('editZoneId').value;
+    const zoneName = document.getElementById('editZoneName').value;
+    console.log("Edited zone Name:", zoneName);
+    if (!zoneName) {
+        showAlertForTime('emptyZoneNameAlertEdit', 3000);
+        return;
+    }
+    if (doesZoneExist(zoneName)) {
+        showAlertForTime('duplicateZoneNameAlertEdit', 3000);
+        return;
+    }
+    if (!isValidInput(zoneName)) {
+        showAlertForTime('invalidZoneNameAlertEdit', 3000);
+        return;
+    }
+    editZone(zoneId, {nazwaStrefy: zoneName});
+}
+
+function doesZoneExist(zoneName) {
+    const zones = document.querySelectorAll('#data-table-zones td:nth-child(2)');
+    for (let i = 0; i < zones.length; i++) {
+        if (zones[i].textContent.trim() === zoneName.trim()) {
+            console.log("Zone " + zones[i].textContent + " already exists.");
+            return true;
+        }
+    }
+    return false;
+}
+
+function isValidInput(input) {
+    //letters uppercase and lowercase, numbers, and spaces
+    const regex = /^[A-Za-z0-9 ]+$/;
+    return regex.test(input);
+}
+
+function hideAllAlerts() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => alert.style.display = 'none');
+}
+
+function showAlertForTime(alertId, duration) {
+    hideAllAlerts();
+    const alertElement = document.getElementById(alertId);
+    alertElement.style.display = 'block';
+    setTimeout(() => {
+        alertElement.style.display = 'none';
+    }, duration);
 }
 
 document.addEventListener('DOMContentLoaded', initializeEventListeners);
