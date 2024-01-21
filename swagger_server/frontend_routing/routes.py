@@ -11,6 +11,10 @@ def setup_routes(app):
     def login():
         return render_template('login.html')
 
+    @app.route('/loginPrompt')
+    def login_prompt():
+        return render_template('loginPrompt.html')
+
     @app.route('/zones')
     def zones():
         return render_template('zones.html')
@@ -22,6 +26,10 @@ def setup_routes(app):
     @app.route('/employees')
     def employees():
         return render_template('employees.html')
+
+    @app.route('/reports')
+    def reports():
+        return render_template('reports.html')
 
     @app.route('/css/<file_name>')
     def css_files(file_name):

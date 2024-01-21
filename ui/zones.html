@@ -10,77 +10,143 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="imprints.html">Odbicia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="zones.html">Strefy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="employees.html">Pracownicy</a>
-                    </li>
-                </ul>
+<script type="module">
+    import {logout} from './js/utils.js';
+
+    window.logout = logout;
+</script>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="imprints.html">Odbicia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="zones.html">Strefy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="employees.html">Pracownicy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">Raporty</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <button class="btn btn-link" onclick="logout()">Wyloguj się</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container table-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID STREFY</th>
+            <th>NAZWA STREFY</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="data-table-zones">
+
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center mt-4 mb-4">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addZoneModal">
+        Dodaj strefę
+    </button>
+</div>
+
+<div class="modal fade" id="addZoneModal" tabindex="-1" role="dialog" aria-labelledby="addZoneModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addZoneModalLabel">Dodaj strefę</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-secondary">Wprowadź nazwę strefy.</p>
+                <div id="emptyZoneNameAlertAdd" class="alert alert-danger" style="display:none;">
+                    Proszę wprowadzić nazwę strefy.
+                </div>
+                <div id="duplicateZoneNameAlertAdd" class="alert alert-danger" style="display:none;">
+                    Nazwa strefy już istnieje. Proszę wybrać inną nazwę.
+                </div>
+                <div id="invalidZoneNameAlertAdd" class="alert alert-danger" style="display:none;">
+                    Nazwa strefy nie może zawierać znaków specjalnych.
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="zoneName">Nazwa strefy</label>
+                        <input type="text" class="form-control" id="zoneName">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-between full-width">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 48%;">Anuluj
+                    </button>
+                    <button type="button" id="addZoneButton" class="btn btn-primary" style="width: 48%;">Dodaj</button>
+                </div>
             </div>
         </div>
-    </nav>
-
-    <div class="container table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID STREFY</th>
-                    <th>NAZWA STREFY</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="data-table-zones">
-
-            </tbody>
-        </table>
     </div>
+</div>
 
-    <div class="text-center mt-4 mb-4">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addZoneModal">
-            Dodaj strefę
-        </button>
-    </div>
-
-    <div class="modal fade" id="addZoneModal" tabindex="-1" role="dialog" aria-labelledby="addZoneModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addZoneModalLabel">Dodaj strefę</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+<div class="modal fade" id="editZoneModal" tabindex="-1" role="dialog" aria-labelledby="editZoneModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editZoneModalLabel">Edytuj strefę</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-secondary">Wprowadź nazwę strefy.</p>
+                <div id="emptyZoneNameAlertEdit" class="alert alert-danger" style="display:none;">
+                    Proszę wprowadzić nazwę strefy.
+                </div>
+                <div id="duplicateZoneNameAlertEdit" class="alert alert-danger" style="display:none;">
+                    Nazwa strefy już istnieje. Proszę wybrać inną nazwę.
+                </div>
+                <div id="invalidZoneNameAlertEdit" class="alert alert-danger" style="display:none;">
+                    Nazwa strefy nie może zawierać znaków specjalnych.
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="editZoneName">Nazwa strefy</label>
+                        <input type="text" class="form-control" id="editZoneName">
+                    </div>
+                    <input type="hidden" id="editZoneId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-between full-width">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 48%;">Anuluj
+                    </button>
+                    <button type="button" id="editZoneButton" class="btn btn-primary" style="width: 48%;">Edytuj
                     </button>
                 </div>
-                <div class="modal-body">
-                    <p class="text-secondary">Wprowadź nazwę strefy.</p>
-                    <form>
-                        <div class="form-group">
-                            <label for="zoneName">Nazwa strefy</label>
-                            <input type="text" class="form-control" id="zoneName">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="d-flex justify-content-between full-width">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 48%;">Anuluj</button>
-                        <button type="button" id="addZoneButton" class="btn btn-primary" style="width: 48%;">Dodaj</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    <script src="js/zones.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</div>
+
+<script type="module" src="js/zones.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

@@ -13,6 +13,9 @@
 <div class="login-container">
     <h2 class="login-title">Login</h2>
     <p class="login-description">Zaloguj się do panelu administracyjnego.</p>
+    <div id="loginFailAlert" class="alert alert-danger" style="display:none;">
+        Nieprawidłowy login lub hasło.
+    </div>
     <form id="loginForm">
         <div class="form-group">
             <label for="username">Login</label>
@@ -26,7 +29,6 @@
             <button type="submit" class="btn btn-primary mb-2 mt-4">Zaloguj się</button>
         </div>
     </form>
-    <div id="error-message" class="error-message" style="color: red; display: none;"></div>
 </div>
 
 <script src="js/login.js"></script>

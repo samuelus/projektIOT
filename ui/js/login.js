@@ -32,10 +32,12 @@ function handleSuccessfulLogin(data) {
 }
 
 function handleLoginError(error) {
-    console.error('Error:', error);
-    const errorMessageDiv = document.getElementById('error-message');
-    errorMessageDiv.textContent = 'Nie udało się zalogować';
-    errorMessageDiv.style.display = 'block';
+    console.error('Error logging in:', error);
+    const alertElement = document.getElementById('loginFailAlert');
+    alertElement.style.display = 'block';
+    setTimeout(() => {
+        alertElement.style.display = 'none';
+    }, 3000);
 }
 
 document.getElementById('loginForm').addEventListener('submit', handleLoginFormSubmission);
