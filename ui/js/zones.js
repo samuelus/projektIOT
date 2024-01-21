@@ -199,3 +199,8 @@ function isValidInput(input) {
 }
 
 document.addEventListener('DOMContentLoaded', initializeZoneEventListeners);
+document.addEventListener('DOMContentLoaded', (event) => {
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/loginPrompt.html';
+    }
+});

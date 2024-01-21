@@ -73,3 +73,9 @@ function populateImprintsTable(data) {
 document.addEventListener('DOMContentLoaded', function () {
     fetchDataFromImprintEndpoint().then(data => populateImprintsTable(data));
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/loginPrompt.html';
+    }
+});

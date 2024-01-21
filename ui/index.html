@@ -5,25 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Ewidencji Czasu Pracy - Strona Główna</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f4f4f4;
-            position: relative;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            padding-top: 20px;
-        }
-        .authors {
-            margin-top: 30px;
-            color: #999;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div class="container text-center">
-        <h1 class="mb-4">System Ewidencji Czasu Pracy</h1>
+<div class="card">
+    <div class="card-body text-center">
+        <h1 class="card-title mb-4">System Ewidencji Czasu Pracy</h1>
         <h2 class="mb-4">Wykorzystanie Karty RFID</h2>
         <p class="mb-5">
             System umożliwia rejestrację czasu pracy pracowników za pomocą kart RFID.
@@ -33,21 +20,22 @@
         </p>
 
         <div class="mb-4">
-            <button class="btn btn-primary" onclick="window.location.href='/login';">Panel Administracyjny</button>
+            <button class="btn btn-primary mb-2" onclick="window.location.href='/login';">Panel Administracyjny</button>
             <button class="btn btn-info" onclick="window.location.href='/help';">Pomoc</button>
         </div>
-
-        <div class="authors">
-            <p>Autorzy:</p>
-            <p>Artsiom Shablinski</p>
-            <p>Vera Yemialyanava</p>
-            <p>Samuel Żołądz</p>
-            <p>Mateusz Ejsmont</p>
-        </div>
     </div>
+    <div class="authors">
+        <p>Autorzy:</p>
+        <p>Artsiom Shablinski</p>
+        <p>Vera Yemialyanava</p>
+        <p>Samuel Żołądz</p>
+        <p>Mateusz Ejsmont</p>
+    </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
