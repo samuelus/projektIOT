@@ -1,3 +1,4 @@
+import {showAlertForTime } from "./utils.js";
 function fetchDataFromZoneEndpoint() {
 
     return fetch('api/strefy', {
@@ -86,7 +87,6 @@ function editZone(zoneId, newName) {
             console.error('Error editing zone:', error);
         });
 }
-
 
 function populateZonesTable(data) {
     //console.log(data);
@@ -196,20 +196,6 @@ function isValidInput(input) {
     //letters uppercase and lowercase, numbers, and spaces
     const regex = /^[A-Za-z0-9 ]+$/;
     return regex.test(input);
-}
-
-function hideAllAlerts() {
-    const alerts = document.querySelectorAll('.alert');
-    alerts.forEach(alert => alert.style.display = 'none');
-}
-
-function showAlertForTime(alertId, duration) {
-    hideAllAlerts();
-    const alertElement = document.getElementById(alertId);
-    alertElement.style.display = 'block';
-    setTimeout(() => {
-        alertElement.style.display = 'none';
-    }, duration);
 }
 
 document.addEventListener('DOMContentLoaded', initializeZoneEventListeners);

@@ -12,6 +12,11 @@
 </head>
 
 <body>
+<script type="module">
+    import {logout} from './js/utils.js';
+
+    window.logout = logout;
+</script>
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
         <div class="collapse navbar-collapse">
@@ -24,6 +29,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="employees.html">Pracownicy</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <button class="btn btn-link" onclick="logout()">Wyloguj się</button>
                 </li>
             </ul>
         </div>
@@ -170,7 +180,7 @@
         $('.selectpicker').selectpicker();
     });
 </script>
-<script src="js/employees.js"></script>
+<script type="module" src="js/employees.js"></script>
 
 </body>
 

@@ -1,3 +1,4 @@
+import {showAlertForTime} from "./utils.js";
 function fetchDataFromEmployeeEndpoint() {
 
     return fetch('api/pracownicy', {
@@ -311,19 +312,6 @@ function isValidInput(input) {
     return regex.test(input);
 }
 
-function hideAllAlerts() {
-    const alerts = document.querySelectorAll('.alert');
-    alerts.forEach(alert => alert.style.display = 'none');
-}
-
-function showAlertForTime(alertId, duration) {
-    hideAllAlerts();
-    const alertElement = document.getElementById(alertId);
-    alertElement.style.display = 'block';
-    setTimeout(() => {
-        alertElement.style.display = 'none';
-    }, duration);
-}
 
 
 document.addEventListener('DOMContentLoaded', initializeEmployeeEventListeners);
