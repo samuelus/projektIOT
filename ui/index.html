@@ -1,25 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Główna</title>
+    <title>System Ewidencji Czasu Pracy - Strona Główna</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        body {
+            background-color: #f4f4f4;
+            position: relative;
+            font-family: Arial, sans-serif;
         }
-        button:hover {
-            background-color: #45a049;
+        .container {
+            padding-top: 20px;
+        }
+        .authors {
+            margin-top: 30px;
+            color: #999;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <h1>Strona Główna</h1>
-    <button onclick="window.location.href='/login';">Przejdź do Logowania</button>
+    <div class="container text-center">
+        <h1 class="mb-4">System Ewidencji Czasu Pracy</h1>
+        <h2 class="mb-4">Wykorzystanie Karty RFID</h2>
+        <p class="mb-5">
+            System umożliwia rejestrację czasu pracy pracowników za pomocą kart RFID.
+            Każdy pracownik, przy pomocy osobistej karty, może rozpocząć lub zakończyć pracę
+            w wyznaczonych strefach. Administratorzy systemu mają dostęp do danych czasowych
+            i mogą generować szczegółowe raporty.
+        </p>
+
+        <div class="mb-4">
+            <button class="btn btn-success" onclick="window.location.href='/login';">Panel Administracyjny</button>
+            <button class="btn btn-info" onclick="window.location.href='/help';">Pomoc</button>
+        </div>
+
+        <div class="authors">
+            <p>Autorzy:</p>
+            <p>Artsiom Shablinski</p>
+            <p>Vera Yemialyanava</p>
+            <p>Samuel Żołądz</p>
+            <p>Mateusz Ejsmont</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -137,7 +137,7 @@ function openEditModal(id, name) {
     $('#editZoneModal').modal('show');
 }
 
-function initializeEventListeners() {
+function initializeZoneEventListeners() {
     fetchDataFromZoneEndpoint().then(data => populateZonesTable(data));
 
     document.getElementById('addZoneButton').addEventListener('click', handleAddZoneClick);
@@ -148,15 +148,15 @@ function handleAddZoneClick() {
     const zoneName = document.getElementById('zoneName').value;
     console.log("Added zone Name:", zoneName);
     if (!zoneName) {
-        showAlertForTime('emptyZoneNameAlertAdd', 3000);
+        showAlertForTime('emptyZoneNameAlertAdd', 4000);
         return;
     }
     if (doesZoneExist(zoneName)) {
-        showAlertForTime('duplicateZoneNameAlertAdd', 3000);
+        showAlertForTime('duplicateZoneNameAlertAdd', 4000);
         return;
     }
     if (!isValidInput(zoneName)) {
-        showAlertForTime('invalidZoneNameAlertAdd', 3000);
+        showAlertForTime('invalidZoneNameAlertAdd', 4000);
         return;
     }
     addZone({nazwaStrefy: zoneName});
@@ -167,15 +167,15 @@ function handleEditZoneClick() {
     const zoneName = document.getElementById('editZoneName').value;
     console.log("Edited zone Name:", zoneName);
     if (!zoneName) {
-        showAlertForTime('emptyZoneNameAlertEdit', 3000);
+        showAlertForTime('emptyZoneNameAlertEdit', 4000);
         return;
     }
     if (doesZoneExist(zoneName)) {
-        showAlertForTime('duplicateZoneNameAlertEdit', 3000);
+        showAlertForTime('duplicateZoneNameAlertEdit', 4000);
         return;
     }
     if (!isValidInput(zoneName)) {
-        showAlertForTime('invalidZoneNameAlertEdit', 3000);
+        showAlertForTime('invalidZoneNameAlertEdit', 4000);
         return;
     }
     editZone(zoneId, {nazwaStrefy: zoneName});
@@ -212,4 +212,4 @@ function showAlertForTime(alertId, duration) {
     }, duration);
 }
 
-document.addEventListener('DOMContentLoaded', initializeEventListeners);
+document.addEventListener('DOMContentLoaded', initializeZoneEventListeners);

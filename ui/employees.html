@@ -38,6 +38,7 @@
             <th>IMIĘ</th>
             <th>NAZWISKO</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody id="data-table-employees">
@@ -54,7 +55,7 @@
 </div>
 
 <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" data-modal-type="add">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -65,33 +66,94 @@
             </div>
             <div class="modal-body">
                 <p class="text-secondary">Wprowadź id karty, imię i nazwisko pracownika.</p>
+                <div id="emptyDataAlertAdd" class="alert alert-danger" style="display:none;">
+                    Proszę wprowadzić wszyskie wymagane informacje.
+                </div>
+                <div id="duplicateCardIdAlertAdd" class="alert alert-danger" style="display:none;">
+                    Pracownik o podanym ID karty już istnieje.
+                </div>
+                <div id="invalidDataAlertAdd" class="alert alert-danger" style="display:none;">
+                    Dozwolone są tylko litery oraz apostrof (') i myślnik (-).
+                </div>
                 <form>
                     <div class="form-group">
-                        <label for="cardId">ID Karty</label>
-                        <input type="text" class="form-control" id="cardId">
+                        <label for="cardId">ID Karty<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="cardId" required>
                     </div>
                     <div class="form-group">
-                        <label for="zoneSelect">Select Zone(s):</label>
-                        <select class="selectpicker" multiple data-live-search="true" id="zoneSelect">
+                        <label for="zoneSelect">Select Zone(s):<span class="text-danger"> *</span></label>
+                        <select class="selectpicker" multiple data-live-search="true" id="zoneSelect" required>
 
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="name">Imię</label>
-                        <input type="text" class="form-control" id="name">
+                        <label for="name">Imię<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="surname">Nazwisko</label>
-                        <input type="text" class="form-control" id="surname">
+                        <label for="surname">Nazwisko<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="surname" required>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-between full-width">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            style="width: 48%;">Anuluj
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 48%;">Anuluj
                     </button>
-                    <button type="button" class="btn btn-primary" id="addEmployeeButton" style="width: 48%;">Dodaj</button>
+                    <button type="button" class="btn btn-primary" id="addEmployeeButton" style="width: 48%;">Dodaj
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="editEmployeeModalLabel"
+     aria-hidden="true" data-modal-type="edit">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEmployeeModalLabel">Edytuj pracownika</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-secondary">Wprowadź imię i nazwisko pracownika.</p>
+                <div id="emptyDataAlertEdit" class="alert alert-danger" style="display:none;">
+                    Proszę wprowadzić wszyskie wymagane informacje.
+                </div>
+                <div id="invalidDataAlertEdit" class="alert alert-danger" style="display:none;">
+                    Dozwolone są tylko litery oraz apostrof (') i myślnik (-).
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="editEmployeeId">Id karty pracownika: </label>
+                        <input type="text" class="form-control" id="editEmployeeId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmployeeZoneSelect">Select Zone(s):<span class="text-danger"> *</span></label>
+                        <select class="selectpicker" multiple data-live-search="true" id="editEmployeeZoneSelect"
+                                required>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmployeeName">Imię<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="editEmployeeName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmployeeSurname">Nazwisko<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="editEmployeeSurname" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-between full-width">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 48%;">Anuluj
+                    </button>
+                    <button type="button" class="btn btn-primary" id="editEmployeeButton" style="width: 48%;">Edytuj
+                    </button>
                 </div>
             </div>
         </div>
