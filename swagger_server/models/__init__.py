@@ -4,6 +4,7 @@
 from __future__ import absolute_import
 # import models into model package
 from swagger_server.models.admin_login_body import AdminLoginBody
+from swagger_server.models.average_work_time_body import AverageWorkTimeBody
 from swagger_server.models.inline_response200 import InlineResponse200
 from swagger_server.models.inline_response2001 import InlineResponse2001
 from swagger_server.models.inline_response2002 import InlineResponse2002
@@ -19,3 +20,5 @@ from swagger_server.models.pracownik_body import PracownikBody
 from swagger_server.models.pracownik_id_karty_body import PracownikIdKartyBody
 from swagger_server.models.strefa_body import StrefaBody
 from swagger_server.models.strefa_id_strefy_body import StrefaIdStrefyBody
+from swagger_server.models.total_work_time_body import TotalWorkTimeBody
+from swagger_server.models.total_work_unit_body import TotalWorkUnitBody

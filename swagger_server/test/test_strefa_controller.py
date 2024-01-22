@@ -23,7 +23,7 @@ class TestStrefaController(BaseTestCase):
         """
         body = StrefaBody()
         response = self.client.open(
-            '/strefa',
+            '/api/strefa',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -36,7 +36,7 @@ class TestStrefaController(BaseTestCase):
         Delete a zone.
         """
         response = self.client.open(
-            '/strefa/{id_strefy}'.format(id_strefy=789),
+            '/api/strefa/{id_strefy}'.format(id_strefy=789),
             method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -48,7 +48,7 @@ class TestStrefaController(BaseTestCase):
         """
         body = StrefaIdStrefyBody()
         response = self.client.open(
-            '/strefa/{id_strefy}'.format(id_strefy=789),
+            '/api/strefa/{id_strefy}'.format(id_strefy=789),
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')
@@ -61,7 +61,7 @@ class TestStrefaController(BaseTestCase):
         Get details of a specific zone.
         """
         response = self.client.open(
-            '/strefa/{id_strefy}'.format(id_strefy=789),
+            '/api/strefa/{id_strefy}'.format(id_strefy=789),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -72,7 +72,7 @@ class TestStrefaController(BaseTestCase):
         Get a list of all zones.
         """
         response = self.client.open(
-            '/strefy',
+            '/api/strefy',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

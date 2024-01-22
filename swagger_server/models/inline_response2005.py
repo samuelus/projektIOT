@@ -14,7 +14,7 @@ class InlineResponse2005(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id_odbicia: int=None, id_karty: str=None, id_strefy: int=None, czas_wejscia: datetime=None, czas_wyjscia: datetime=None, czas_pobytu: int=None):  # noqa: E501
+    def __init__(self, id_odbicia: int=None, id_karty: str=None, id_strefy: int=None, czas_wejscia: datetime=None, czas_wyjscia: datetime=None, czas_pobytu: int=None, nazwa_strefy: str=None):  # noqa: E501
         """InlineResponse2005 - a model defined in Swagger
 
         :param id_odbicia: The id_odbicia of this InlineResponse2005.  # noqa: E501
@@ -29,6 +29,8 @@ class InlineResponse2005(Model):
         :type czas_wyjscia: datetime
         :param czas_pobytu: The czas_pobytu of this InlineResponse2005.  # noqa: E501
         :type czas_pobytu: int
+        :param nazwa_strefy: The nazwa_strefy of this InlineResponse2005.  # noqa: E501
+        :type nazwa_strefy: str
         """
         self.swagger_types = {
             'id_odbicia': int,
@@ -36,7 +38,8 @@ class InlineResponse2005(Model):
             'id_strefy': int,
             'czas_wejscia': datetime,
             'czas_wyjscia': datetime,
-            'czas_pobytu': int
+            'czas_pobytu': int,
+            'nazwa_strefy': str
         }
 
         self.attribute_map = {
@@ -45,7 +48,8 @@ class InlineResponse2005(Model):
             'id_strefy': 'id_strefy',
             'czas_wejscia': 'czas_wejscia',
             'czas_wyjscia': 'czas_wyjscia',
-            'czas_pobytu': 'czas_pobytu'
+            'czas_pobytu': 'czas_pobytu',
+            'nazwa_strefy': 'nazwa_strefy'
         }
         self._id_odbicia = id_odbicia
         self._id_karty = id_karty
@@ -53,6 +57,7 @@ class InlineResponse2005(Model):
         self._czas_wejscia = czas_wejscia
         self._czas_wyjscia = czas_wyjscia
         self._czas_pobytu = czas_pobytu
+        self._nazwa_strefy = nazwa_strefy
 
     @classmethod
     def from_dict(cls, dikt) -> 'InlineResponse2005':
@@ -202,3 +207,26 @@ class InlineResponse2005(Model):
         """
 
         self._czas_pobytu = czas_pobytu
+
+    @property
+    def nazwa_strefy(self) -> str:
+        """Gets the nazwa_strefy of this InlineResponse2005.
+
+        The name of the zone accessed.  # noqa: E501
+
+        :return: The nazwa_strefy of this InlineResponse2005.
+        :rtype: str
+        """
+        return self._nazwa_strefy
+
+    @nazwa_strefy.setter
+    def nazwa_strefy(self, nazwa_strefy: str):
+        """Sets the nazwa_strefy of this InlineResponse2005.
+
+        The name of the zone accessed.  # noqa: E501
+
+        :param nazwa_strefy: The nazwa_strefy of this InlineResponse2005.
+        :type nazwa_strefy: str
+        """
+
+        self._nazwa_strefy = nazwa_strefy

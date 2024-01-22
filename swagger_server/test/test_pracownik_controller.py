@@ -22,7 +22,7 @@ class TestPracownikController(BaseTestCase):
         """
         body = PracownikBody()
         response = self.client.open(
-            '/pracownik',
+            '/api/pracownik',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -35,7 +35,7 @@ class TestPracownikController(BaseTestCase):
         Delete an employee.
         """
         response = self.client.open(
-            '/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
+            '/api/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
             method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -47,7 +47,7 @@ class TestPracownikController(BaseTestCase):
         """
         body = PracownikIdKartyBody()
         response = self.client.open(
-            '/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
+            '/api/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')
@@ -60,7 +60,7 @@ class TestPracownikController(BaseTestCase):
         Get a list of all employees.
         """
         response = self.client.open(
-            '/pracownicy',
+            '/api/pracownicy',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -71,7 +71,7 @@ class TestPracownikController(BaseTestCase):
         Get an employee's details.
         """
         response = self.client.open(
-            '/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
+            '/api/pracownik/{id_karty}'.format(id_karty='id_karty_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

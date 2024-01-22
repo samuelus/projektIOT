@@ -419,6 +419,151 @@ paths:
       security:
       - bearerAuth: []
       x-openapi-router-controller: swagger_server.controllers.odbicia_controller
+  /odbicia/average-work-time:
+    get:
+      tags:
+      - odbicia
+      summary: Get average work time of each employee between dates.
+      description: |
+        This endpoint returns the average work time for each employee between the given start and end dates.
+      operationId: average_work_time
+      parameters:
+      - name: start_date
+        in: query
+        description: The start date in ISO 8601 format.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: The end date in ISO 8601 format.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: A list of employees and their average work times.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/average-work-time_body'
+                x-content-type: application/json
+        "400":
+          description: Invalid parameters provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.odbicia_controller
+  /odbicia/total-work-time:
+    get:
+      tags:
+      - odbicia
+      summary: Get total work time of each employee between dates.
+      description: |
+        This endpoint returns the total work time for each employee between the given start and end dates.
+        The `calkowity_czas_pracy` is provided in seconds.
+      operationId: total_work_time
+      parameters:
+      - name: start_date
+        in: query
+        description: The start date in ISO 8601 format.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: The end date in ISO 8601 format.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: A list of employees and their total work times.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/total-work-time_body'
+                x-content-type: application/json
+        "400":
+          description: Invalid parameters provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.odbicia_controller
+  /odbicia/total-work-unit:
+    get:
+      tags:
+      - odbicia
+      summary: Get total work unit of each employee between dates.
+      description: |
+        This endpoint returns the total work unit for each employee between the given start and end dates.
+      operationId: total_work_unit
+      parameters:
+      - name: start_date
+        in: query
+        description: The start date in ISO 8601 format.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: The end date in ISO 8601 format.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: A list of employees and their total work unit.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/total-work-unit_body'
+                x-content-type: application/json
+        "400":
+          description: Invalid parameters provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized - Invalid or no authentication token provided
+      security:
+      - bearerAuth: []
+      x-openapi-router-controller: swagger_server.controllers.odbicia_controller
 components:
   schemas:
     inline_response_200_2_pracownicy:
@@ -501,6 +646,9 @@ components:
             available.
           nullable: true
           example: 3600
+        nazwa_strefy:
+          type: string
+          description: The name of the zone accessed.
       example:
         czas_wejscia: 2000-01-23T04:56:07.000+00:00
         czas_pobytu: 3600
@@ -508,6 +656,70 @@ components:
         id_karty: id_karty
         czas_wyjscia: 2000-01-23T04:56:07.000+00:00
         id_strefy: 6
+        nazwa_strefy: nazwa_strefy
+    average-work-time_body:
+      type: object
+      properties:
+        id_karty:
+          type: string
+          description: The ID of the card that accessed the zone.
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+        sredni_czas_pracy:
+          type: integer
+          description: The duration of the average work time in seconds.
+          example: 3600
+      example:
+        imie: imie
+        id_karty: id_karty
+        nazwisko: nazwisko
+        sredni_czas_pracy: 3600
+    total-work-time_body:
+      type: object
+      properties:
+        id_karty:
+          type: string
+          description: The ID of the card that accessed the zone.
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+        calkowity_czas_pracy:
+          type: integer
+          description: The duration of the total work time in seconds.
+          example: 3600
+      example:
+        imie: imie
+        id_karty: id_karty
+        nazwisko: nazwisko
+        calkowity_czas_pracy: 3600
+    total-work-unit_body:
+      type: object
+      properties:
+        id_karty:
+          type: string
+          description: The ID of the card that accessed the zone.
+        imie:
+          type: string
+          description: The first name of the employee.
+        nazwisko:
+          type: string
+          description: The last name of the employee.
+        zarejestrowane_wizyty:
+          type: integer
+          description: The duration of the total work time in seconds.
+          example: 3600
+      example:
+        imie: imie
+        id_karty: id_karty
+        nazwisko: nazwisko
+        zarejestrowane_wizyty: 3600
     pracownik_body:
       required:
       - id

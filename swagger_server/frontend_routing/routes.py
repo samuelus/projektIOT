@@ -41,5 +41,4 @@ def setup_routes(app):
 
     @app.route('/<path:path>.html')
     def redirect_html(path):
-        print(path)
         return redirect("/"+path)
