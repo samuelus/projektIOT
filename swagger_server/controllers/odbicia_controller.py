@@ -31,7 +31,15 @@ def average_work_time(start_date, end_date):  # noqa: E501
     """
     start_date = util.deserialize_datetime(start_date)
     end_date = util.deserialize_datetime(end_date)
-    return 'do some magic!'
+    database = db_manager.DbManager
+    work_time_dict = database.average_work_time_between_dates_report(start_date, end_date)
+
+    return [AverageWorkTimeBody.from_dict({
+        "id_karty": worker.id_karty,
+        "imie": worker.imie,
+        "nazwisko": worker.nazwisko,
+        "sredni_czas_pracy": time.total_seconds()
+    }) for worker, time in work_time_dict.items()]
 
 
 def get_entries_exits_report(id_strefy=None, id_karty=None, czas_wejscia_od=None, czas_wejscia_do=None,
@@ -104,7 +112,15 @@ def total_work_time(start_date, end_date):  # noqa: E501
     """
     start_date = util.deserialize_datetime(start_date)
     end_date = util.deserialize_datetime(end_date)
-    return 'do some magic!'
+    database = db_manager.DbManager
+    work_time_dict = database.total_work_time_between_dates_report(start_date, end_date)
+
+    return [TotalWorkTimeBody.from_dict({
+        "id_karty": worker.id_karty,
+        "imie": worker.imie,
+        "nazwisko": worker.nazwisko,
+        "calkowity_czas_pracy": time.total_seconds()
+    }) for worker, time in work_time_dict.items()]
 
 
 def total_work_unit(start_date, end_date):  # noqa: E501
@@ -121,4 +137,12 @@ def total_work_unit(start_date, end_date):  # noqa: E501
     """
     start_date = util.deserialize_datetime(start_date)
     end_date = util.deserialize_datetime(end_date)
-    return 'do some magic!'
+    database = db_manager.DbManager
+    work_unit_dict = database.total_work_units_between_dates_report(start_date, end_date)
+
+    return [TotalWorkUnitBody.from_dict({
+        "id_karty": worker.id_karty,
+        "imie": worker.imie,
+        "nazwisko": worker.nazwisko,
+        "zarejestrowane_wizyty": counter
+    }) for worker, counter in work_unit_dict.items()]
