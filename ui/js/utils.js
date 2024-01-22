@@ -18,4 +18,4 @@ function logout() {
     window.location.href = '/';
 }
 
-export { hideAllAlerts, showAlertForTime, logout };
+export {hideAllAlerts, showAlertForTime, logout};

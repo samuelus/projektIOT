@@ -1,4 +1,5 @@
-import {showAlertForTime } from "./utils.js";
+import {showAlertForTime} from "./utils.js";
+
 function fetchDataFromZoneEndpoint() {
 
     return fetch('api/strefy', {
@@ -202,5 +203,11 @@ document.addEventListener('DOMContentLoaded', initializeZoneEventListeners);
 document.addEventListener('DOMContentLoaded', (event) => {
     if (!localStorage.getItem('token')) {
         window.location.href = '/loginPrompt.html';
+    }
+});
+
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        window.location.reload();
     }
 });

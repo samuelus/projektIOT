@@ -1,4 +1,5 @@
 import {showAlertForTime} from "./utils.js";
+
 function fetchDataFromEmployeeEndpoint() {
 
     return fetch('api/pracownicy', {
@@ -312,12 +313,16 @@ function isValidInput(input) {
     return regex.test(input);
 }
 
-
-
 document.addEventListener('DOMContentLoaded', initializeEmployeeEventListeners);
 
 document.addEventListener('DOMContentLoaded', (event) => {
     if (!localStorage.getItem('token')) {
         window.location.href = '/loginPrompt.html';
+    }
+});
+
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        window.location.reload();
     }
 });

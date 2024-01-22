@@ -146,4 +146,16 @@ function updateTableWithData(data, reportType) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/loginPrompt.html';
+    }
+});
+
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+
 

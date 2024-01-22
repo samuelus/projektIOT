@@ -1,11 +1,10 @@
-
 function handleLoginFormSubmission(event) {
     event.preventDefault();
 
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    performLogin({ username, password });
+    performLogin({username, password});
 }
 
 function performLogin(loginData) {
@@ -16,14 +15,14 @@ function performLogin(loginData) {
         },
         body: JSON.stringify(loginData)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Login failed');
-        }
-        return response.json();
-    })
-    .then(handleSuccessfulLogin)
-    .catch(handleLoginError);
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+            return response.json();
+        })
+        .then(handleSuccessfulLogin)
+        .catch(handleLoginError);
 }
 
 function handleSuccessfulLogin(data) {
