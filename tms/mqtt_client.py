@@ -4,6 +4,8 @@ import json
 from constants import *
 import traceback
 import time
+import threading
+
 
 from PIL import Image, ImageDraw, ImageFont
 import lib.oled.SSD1331 as SSD1331
@@ -12,7 +14,16 @@ disp = SSD1331.SSD1331()
 disp.Init()
 
 
-### OLD VERSION , DELETE IF NEWER ONE WORKS ###
+
+def clear_screen():
+    time.sleep(2)
+    image1 = Image.new("RGB", (disp.width, disp.height), "BLACK")
+    disp.ShowImage(image1, 0, 0)
+
+ 
+
+
+## OLD VERSION , DELETE IF NEWER ONE WORKS ###
 # def print_on_screen(text):
 #     image1 = Image.new("RGB", (disp.width, disp.height), "BLACK")
 #     draw = ImageDraw.Draw(image1)
@@ -21,30 +32,29 @@ disp.Init()
 #     disp.ShowImage(image1, 0, 0)
 
 def print_on_screen(text):
-    max_width = -1
-    assert max_width == -1, "USTAW MAX_WIDTH"
+    max_width = 15
+    assert max_width != -1, "USTAW MAX_WIDTH"
     image1 = Image.new("RGB", (disp.width, disp.height), "BLACK")
     draw = ImageDraw.Draw(image1)
     fontSmall = ImageFont.truetype('./lib/oled/Font.ttf', 13)
 
     lines = []
     for line in text.split('\n'):
-        while line:
-            for j in range(len(line)):
-                if draw.textsize(line[:j + 1], font=fontSmall)[0] > max_width:
-                    break
-            else:
-                j += 1
-            lines.append(line[:j])
-            line = line[j:]
+        lines += [line[j:j + max_width] for j in range(0, len(line), max_width)]
 
     y = 0
     line_height = draw.textsize('A', font=fontSmall)[1]
+    
     for line in lines:
+        print(line)
         draw.text((0, y), line, font=fontSmall)
         y += line_height
 
     disp.ShowImage(image1, 0, 0)
+
+    t1 = threading.Thread(target=clear_screen, name='t1')
+    t1.start()
+    t1.join()
 
 
 class MyMQTTClient:
@@ -65,7 +75,7 @@ class MyMQTTClient:
 
     def process_start_time(self, body):
         start_time = datetime.strptime(body['start_work_time'], '%Y-%m-%d %H:%M:%S')
-        return f"Work start time saved: {start_time.strftime('%H:%M:%S')}"
+        return f"Start saved:{start_time.strftime('%H:%M:%S')}"
 
     def process_work_duration(self, body):
         start_time = datetime.strptime(body['start_work_time'], '%Y-%m-%d %H:%M:%S')
@@ -74,7 +84,7 @@ class MyMQTTClient:
 
         hours, remainder = divmod(time_difference.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
-        return f"You worked for {hours} hours, {minutes} minutes, and {seconds} seconds."
+        return f"Work time: {hours} h {minutes} m {seconds} s"
 
     def on_message(self, client, userdata, msg):
         topic = msg.topic
