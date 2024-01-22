@@ -20,7 +20,7 @@ class TestAdminController(BaseTestCase):
         """
         body = AdminLoginBody()
         response = self.client.open(
-            '/admin/login',
+            '/api/admin/login',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
