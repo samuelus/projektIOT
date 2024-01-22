@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Odbicia</title>
+    <title>Admin Panel - Raporty</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/imprints.css">
+    <link rel="stylesheet" href="css/employees.css">
 </head>
 
 <body>
@@ -15,6 +15,7 @@
 
     window.logout = logout;
 </script>
+<script src="./js/reports.js"></script>
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
         <div class="collapse navbar-collapse">
@@ -41,22 +42,50 @@
     </div>
 </nav>
 
-<div class="container table-container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID KARTY</th>
-            <th>NAZWA STREFY</th>
-            <th>CZAS WEJŚCIA</th>
-            <th>CZAS WYJŚCIA</th>
-            <th>CZAS POBYTU</th>
-        </tr>
-        </thead>
-        <tbody id="data-table-imprints">
+<div class="container mt-4">
+    <h2 class="mb-4">Raporty</h2>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="start-date">Data początkowa</label>
+            <input type="datetime-local" id="start-date" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label for="end-date">Data końcowa</label>
+            <input type="datetime-local" id="end-date" class="form-control">
+        </div>
+        <div class="col mb-3">
+            <div class="d-grid gap-1 mb-1">
+                <button class="btn btn-primary" onclick="fetchAverageWorkTimeReport()">Średni Czas Pracy</button>
+            </div>
+            <div class="d-grid gap-1 mb-1">
+                <button class="btn btn-secondary" onclick="fetchTotalWorkTimeReport()">Całkowity Czas Pracy</button>
+            </div>
+            <div class="d-grid gap-1">
+                <button class="btn btn-info" onclick="fetchTotalWorkUnitsReport()">Liczba Jednostek Pracy</button>
+            </div>
+        </div>
 
-        </tbody>
-    </table>
+    </div>
+
+    <div class="container table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID KARTY</th>
+                <th>IMIĘ</th>
+                <th>NAZWISKO</th>
+                <th>Średni Czas Pracy</th>
+                <th>Całkowity Czas Pracy</th>
+                <th>Naklad pracy (Ile razy był w pracy)</th>
+            </tr>
+            </thead>
+            <tbody id="report-table-body">
+
+            </tbody>
+        </table>
+    </div>
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
