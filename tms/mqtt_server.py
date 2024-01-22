@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import json
 from database import db_manager
 from datetime import datetime
-from constants import *
+from tms.constants import *
 
 
 class TMSLogicProcessor:
