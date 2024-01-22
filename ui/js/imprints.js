@@ -62,7 +62,7 @@ function populateImprintsTable(data) {
         row.appendChild(czasWyjsciaCell);
 
         const czasPobytuCell = document.createElement('td');
-        czasPobytuCell.textContent = item.czas_pobytu ? formatDuration(item.czas_pobytu) : "Working..." ;
+        czasPobytuCell.textContent = item.czas_pobytu ? formatDuration(item.czas_pobytu) : "Working...";
         row.appendChild(czasPobytuCell);
 
         tableBody.appendChild(row);
