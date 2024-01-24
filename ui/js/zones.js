@@ -194,7 +194,6 @@ function doesZoneExist(zoneName) {
 }
 
 function isValidInput(input) {
-    //letters uppercase and lowercase, numbers, and spaces
     const regex = /^[A-Za-z0-9 ]+$/;
     return regex.test(input);
 }
@@ -205,7 +204,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         window.location.href = '/loginPrompt.html';
     }
 });
-
 window.addEventListener('pageshow', function (event) {
     if (event.persisted) {
         window.location.reload();
