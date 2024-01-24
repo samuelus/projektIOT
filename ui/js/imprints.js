@@ -34,7 +34,6 @@ function formatDuration(durationInSeconds) {
     const hours = Math.floor(durationInSeconds / 3600);
     const minutes = Math.floor((durationInSeconds % 3600) / 60);
     const seconds = durationInSeconds % 60;
-
     return `${hours}h ${minutes}m ${seconds}s`;
 }
 
@@ -50,7 +49,7 @@ function populateImprintsTable(data) {
         row.appendChild(idKartyCell);
 
         const idStrefyCell = document.createElement('td');
-        idStrefyCell.textContent = item.id_strefy;
+        idStrefyCell.textContent = item.nazwa_strefy;
         row.appendChild(idStrefyCell);
 
         const czasWejsciaCell = document.createElement('td');

@@ -2,6 +2,7 @@ import {showAlertForTime} from "./utils.js";
 
 function fetchDataFromEmployeeEndpoint() {
 
+
     return fetch('api/pracownicy', {
         method: 'GET',
         headers: {
@@ -305,10 +306,7 @@ function doesCardIdExist(cardId) {
     }
     return false;
 }
-
-
 function isValidInput(input) {
-    //letters uppercase and lowercase, numbers, spaces, apostrophes, and hyphens
     const regex = /^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ '-]+$/;
     return regex.test(input);
 }
@@ -320,7 +318,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         window.location.href = '/loginPrompt.html';
     }
 });
-
 window.addEventListener('pageshow', function (event) {
     if (event.persisted) {
         window.location.reload();

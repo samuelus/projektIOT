@@ -6,16 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Raporty</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/employees.css">
+    <link rel="stylesheet" href="css/reports.css">
 </head>
 
 <body>
-<script type="module">
-    import {logout} from './js/utils.js';
-
-    window.logout = logout;
-</script>
-<script src="./js/reports.js"></script>
+<script type="module" src="./js/reports.js"></script>
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container">
         <div class="collapse navbar-collapse">
@@ -35,12 +30,13 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <button class="btn btn-link" onclick="logout()">Wyloguj się</button>
+                    <button id="log-out-btn" class="btn btn-link" >Wyloguj się</button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 
 <div class="container mt-4">
     <h2 class="mb-4">Raporty</h2>
@@ -48,6 +44,14 @@
         <div class="col-md-4">
             <label for="start-date">Data początkowa</label>
             <input type="datetime-local" id="start-date" class="form-control">
+            <div class="col-md-14 mt-2">
+                <div id="emptyDatesAlert" class="alert alert-danger" style="display:none;">
+                    Proszę podać daty.
+                </div>
+                <div id="invalidDatesAlert" class="alert alert-danger" style="display:none;">
+                    Data początkowa nie może być późniejsza niż data końcowa.
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <label for="end-date">Data końcowa</label>
@@ -55,28 +59,24 @@
         </div>
         <div class="col mb-3">
             <div class="d-grid gap-1 mb-1">
-                <button class="btn btn-primary" onclick="fetchAverageWorkTimeReport()">Średni Czas Pracy</button>
+                <button id="average-work-time-btn" class="btn btn-primary btn-custom" >Średni Czas Pracy</button>
             </div>
             <div class="d-grid gap-1 mb-1">
-                <button class="btn btn-secondary" onclick="fetchTotalWorkTimeReport()">Całkowity Czas Pracy</button>
+                <button id="total-work-time-btn" class="btn btn-secondary btn-custom" >Całkowity Czas Pracy</button>
             </div>
             <div class="d-grid gap-1">
-                <button class="btn btn-info" onclick="fetchTotalWorkUnitsReport()">Liczba Jednostek Pracy</button>
+                <button id="total-work-units-btn" class="btn btn-info btn-custom" >Zarejestrowane Wizyty</button>
             </div>
         </div>
-
     </div>
 
     <div class="container table-container">
-        <table class="table">
+        <table class="table" id="report-table" >
             <thead>
             <tr>
                 <th>ID KARTY</th>
                 <th>IMIĘ</th>
                 <th>NAZWISKO</th>
-                <th>Średni Czas Pracy</th>
-                <th>Całkowity Czas Pracy</th>
-                <th>Naklad pracy (Ile razy był w pracy)</th>
             </tr>
             </thead>
             <tbody id="report-table-body">
