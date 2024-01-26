@@ -78,3 +78,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         window.location.href = '/loginPrompt.html';
     }
 });
+
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
